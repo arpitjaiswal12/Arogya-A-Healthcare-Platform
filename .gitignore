@@ -1,0 +1,38 @@
+# Node modules for backend and client
+/backend/node_modules
+/client/node_modules
+
+# Environment variables
+/backend/.env
+/client/.env
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build files and output
+/dist
+/backend/dist
+/client/dist
+/client/build
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode
+.idea
+
+# Ignore lock files if necessary
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
