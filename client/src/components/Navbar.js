@@ -16,7 +16,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       <div className='flex justify-between items-center w-11/12 max-w-[1160px] py-4 mx-auto'>
         
         <Link to="/" className='text-black font-bold text-[30px]'>
-          Sehat Sathi
+          Arogya
         </Link>
 
         {/* Hamburger Icon for Mobile */}
