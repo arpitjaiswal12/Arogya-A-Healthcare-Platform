@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -26,15 +26,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accountType: {
-    type: String,
-    enum: ["Patient", "Doctor", "Admin"],
-    default: "Patient",
-  },
-  image: {
-    type: String,
-    default: "",
-  },
   dateOfBirth: {
     type: Date,
     required: false,
@@ -48,7 +39,28 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
     required: false,
-  }
+  },
+  consultantFee: {
+    type: Number,
+    required: true,
+  },
+  approvalStatus: {
+    type: Boolean,
+    default: false, // Indicates if the doctor is approved by an admin
+  },
+  specialization: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  experience: {
+    type: Number,
+    required: true, // Experience in years
+  },
+  images: {
+    type: Array,
+    required: true,
+  },
 }, { timestamps: true });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Doctor", doctorSchema);
