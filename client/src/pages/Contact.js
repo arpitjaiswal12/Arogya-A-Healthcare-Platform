@@ -4,7 +4,7 @@ import gif from '../assets/This Moment Is Your Life — Libby VanderPloeg.gif';
 const Contact = () => {
   return (
     <div className="w-11/12 max-w-[1080px] mx-auto mt-8">
-      <section className="bg-gray-200 w-full py-8 px-4 rounded-md">
+      <section className="bg-white border-[3px] rounded-md shadow-md p-6">
         <h2 className="text-center text-2xl font-bold text-black mb-6">Contact Us</h2>
         
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start">
@@ -16,7 +16,7 @@ const Contact = () => {
           />
 
           {/* Right Section with Form */}
-          <form className="w-full lg:w-[50%] bg-white p-6 rounded-md shadow-md">
+          <form className="w-full lg:w-[50%] flex flex-col gap-4">
             <h3 className="text-lg font-semibold text-gray-700 mb-4">Join Our Community</h3>
             <p className="text-gray-600 text-sm mb-6">
               We invite you to join our community. Whether you’re experienced in Ayurveda or just starting out, let’s connect!
@@ -24,37 +24,50 @@ const Contact = () => {
             
             {/* Form Fields */}
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full sm:w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full sm:w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+              <div className="flex gap-x-4">
+                <label className='w-full'>
+                  <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>Name<sup className='text-pink-200'>*</sup></p>
+                  <input
+                    type="text"
+                    placeholder="Enter Your Name"
+                    className='bg-white border-[3px] rounded-[0.5rem] text-black w-full p-[12px]'
+                    required
+                  />
+                </label>
+
+                <label className='w-full'>
+                  <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>Email<sup className='text-pink-200'>*</sup></p>
+                  <input
+                    type="email"
+                    placeholder="Enter Your Email"
+                    className='bg-white border-[3px] rounded-[0.5rem] text-black w-full p-[12px]'
+                    required
+                  />
+                </label>
               </div>
 
-              <input
-                type="tel"
-                placeholder="Phone (optional)"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <label className='w-full'>
+                <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>Phone (optional)</p>
+                <input
+                  type="tel"
+                  placeholder="Enter Your Phone Number"
+                  className='bg-white border-[3px] rounded-[0.5rem] text-black w-full p-[12px]'
+                />
+              </label>
 
-              <textarea
-                placeholder="Message"
-                rows="4"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              ></textarea>
+              <label className='w-full'>
+                <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>Message<sup className='text-pink-200'>*</sup></p>
+                <textarea
+                  placeholder="Type Your Message"
+                  rows="4"
+                  className='bg-white border-[3px] rounded-[0.5rem] text-black w-full p-[12px]'
+                  required
+                ></textarea>
+              </label>
 
               <button
                 type="submit"
-                className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                className='w-full bg-black rounded-[8px] font-medium text-white px-[12px] py-[8px] mt-6 hover:bg-gray-800 transition duration-200'
               >
                 Send Message
               </button>
