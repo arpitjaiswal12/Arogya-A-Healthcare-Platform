@@ -1,156 +1,100 @@
-import React from 'react'
+import React from 'react';
+import bg from '../assets/WhatsApp Image 2023-09-17 at 3.12.02 PM.jpeg';
+import leftimg from '../assets/High Five transition for the latest project.gif';
+import rightimg from '../assets/back-left-4.jpeg';
+import ChatBox from '../components/ChatBox';
+import gif from '../assets/Deep Breathing Animation.gif';
+import { Link } from "react-router-dom";
 
-import bg from '../assets/WhatsApp Image 2023-09-17 at 3.12.02 PM.jpeg'
-import leftimg from '../assets/High Five transition for the latest project.gif'
-import rightimg from '../assets/back-left-4.jpeg'
-import ChatBox from '../components/ChatBox'
-
-import gif from '../assets/Deep Breathing Animation.gif'
-
-import {Link} from "react-router-dom"
-
-
-const Home = ({isLoggedIn}) => {
+const Home = ({ isLoggedIn }) => {
   return (
-    
-    <div>
+    <div className="flex flex-col items-center">
 
-        <div className="relative ml-72">   
-            <img src={bg} className='w-[900px]' />
-            <div className='absolute  '>
-              <h1 className='text-black font-serif font-bold text-[40px] left-[100px] top-[-550px] relative'>Unlock the Power of Telemedicine Wisdom</h1>
-              <br></br>
-              <h1 className='text-black text-center font-bold text-[25px] left-[100px] top-[-550px] relative'>Your Personalized Ayurvedic Healthcare Companion</h1>
-              <Link to="https://ayurtech.streamlit.app/" target='_blank'>
-                    <button className=' bg-richblack-800 text-white text-bold py-[10px] 
-                    px-[18px] rounded-[8px] border border-richblack-700 relative top-[-500px] left-[150px]'>
-                        Browse Herbs
-                    </button>
+      <div className="relative w-full max-w-[900px]">
+        <img src={bg} alt="Background" className="w-full h-auto" />
+        <div className='absolute top-1/2 transform -translate-y-1/2 left-1/2 transform -translate-x-1/2 text-center'>
+          <h1 className='text-black font-serif font-bold text-3xl md:text-4xl'>Unlock the Power of Telemedicine Wisdom</h1>
+          <h1 className='text-black font-bold text-lg md:text-xl'>Your Personalized Ayurvedic Healthcare Companion</h1>
+          <div className="flex flex-col md:flex-row justify-center space-x-0 md:space-x-4 mt-4">
+            <Link to="https://ayurtech.streamlit.app/" target='_blank'>
+              <button className='bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700'>
+                Browse Herbs
+              </button>
             </Link>
-            <Link to="https://sehat-commitandpush.netlify.app" target='_blank'>
-                    <button className=' bg-richblack-800 text-white text-bold py-[10px] 
-                    px-[18px] rounded-[8px] border border-richblack-700 relative top-[-500px] left-[200px]'>
-                        Get Your Checkup Done
-                    </button>
+            <Link to="https://sehat-commitandpush.netlify.app/" target='_blank'>
+              <button className='bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700'>
+                Get Your Checkup Done
+              </button>
             </Link>
-            
             <Link to="https://sfu.mirotalk.com/join/70797BrownGhost" target='_blank'>
-                    <button className='mx-2 bg-richblack-800 text-white text-bold py-[10px] 
-                    px-[18px] rounded-[8px] border border-richblack-700 relative top-[-500px] left-[250px]'>
-                        Create Meeting
-                    </button>
+              <button className='bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700'>
+                Create Meeting
+              </button>
             </Link>
-            </div>
-        </div>
-
-       
-
-      <div className="flex  sm:flex-col lg:flex-row justify-between items-center py-14 ">
-       {/* <!--left part--> */}
-       <div className="space-y-2 ml-14">
-           <h1 className="font-mullish font-bold text-[40px] leading-[1.2] text-black">Get Started Today</h1>
-           <div className="">
-            <p className="font-mullish text-[22px] leading-7 text-black opacity-70 ">
-            "Sehat" is dedicated to revolutionizing healthcare accessibility for remote and underserved communities through innovative telemedicine solutions. Our mission is to bridge the gap in healthcare delivery by leveraging cutting-edge technology to provide timely medical consultations and diagnoses, reducing the need for physical travel to healthcare facilities.
-           </p>
-           <br/>
-           <p className="font-mullish text-[22px] leading-7 text-black opacity-70 ">
-            Are you tired of navigating through numerous Ayurvedic texts and sifting through complex terminology? With our software, you can leave the cumbersome research to us. We've combined the power of Natural Language Processing (NLP) and machine learning to make Ayurveda accessible and practical. No more confusion, just clarity in your healthcare decisions.
-           </p>
           </div>
         </div>
-        {/* <!--right part--> */}
-       <img src={gif} alt=""
-       className="w-full max-w-[550px] relative mr-14 rounded-full"/>
-           
-       </div>
+      </div>
 
-       
-
-       <section
-   className="relative bg-gray-300 w-full mt-10 ">
- 
-   <div className="w-10/12 max-w-[1080px] flex sm:flex-col lg:flex-row justify-between items-center mx-auto py-16 ">
-       <div className="space-y-8 ">
-
-           <div clclassNameass="flex felx-col gap-10 mx-auto"> 
-           <p className="font-mullish font-semibold text-[30px] leading-[1.2] text-black">Ayurveda is not just about treating diseases; it is about creating harmony in body, mind, and spirit." - Dr Vasant Lad</p>
-           
-           </div>   
-       </div>
-   </div>
- 
-        </section>
-
-       <div className="flex  sm:flex-col lg:flex-row justify-between items-center py-20 ">
-        {/* <!--right part--> */}
-       <img src={rightimg} alt=""
-       className="w-full max-w-[580px] relative ml-14 rounded-full"/>
-
-       {/* <!--left part--> */}
-       <div className="space-y-2 ml-8">
-           <h1 className="font-mullish font-bold text-[40px] leading-[1.2] text-black">How It Works?</h1>
-           <div className="">
-            <p className="font-mullish text-[22px] leading-7 text-black opacity-70 ">
-            Our Ayurvedic Formulation Recommendation Software is a sophisticated blend of ancient wisdom and state-of-the-art technology, meticulously designed to simplify your journey to optimal health. The process commences with user authentication, ensuring a secure and trusted environment for your health exploration. Next, you input comprehensive patient information, including your psychosomatic constitution, age, clinical condition, comorbidities, and symptoms. This data forms the basis for our personalized recommendations. The culmination of this process is the presentation of carefully curated Ayurvedic formulations designed to meet your wellness needs. But our commitment to empowering you with knowledge doesn't end there. 
-           </p>
-    
-          </div>
+      <div className="flex flex-col lg:flex-row justify-between items-center py-14 w-full max-w-[1080px] mx-auto px-4">
+        <div className="space-y-2">
+          <h1 className="font-mullish font-bold text-3xl md:text-4xl leading-tight text-black">Get Started Today</h1>
+          <p className="font-mullish text-lg md:text-xl leading-7 text-black opacity-70">
+            "Arogya" is dedicated to revolutionizing healthcare accessibility for remote and underserved communities through innovative telemedicine solutions...
+          </p>
+          <p className="font-mullish text-lg md:text-xl leading-7 text-black opacity-70">
+            Are you tired of navigating through numerous Ayurvedic texts and sifting through complex terminology? With our software, you can leave the cumbersome research to us...
+          </p>
         </div>
-           
-       </div>
+        <img src={gif} alt="Deep Breathing Animation" className="w-full max-w-[550px] rounded-full mt-4 lg:mt-0" />
+      </div>
 
-       <div className='relative bg-green-800'>
-            <div class="w-10/12 max-w-[1080px] flex sm:flex-col lg:flex-row justify-between items-center mx-auto py-16 ">
-        
-            <p class="text-white text-center text-sm"><span class="text-[55px] font-bold text-white">80%+</span> <br/> reduction in average <br/>
-                time to first response </p>
-            <p class="text-white text-center text-sm"><span class="text-[55px] font-bold text-white">1,002%</span> <br/>increase in total social<br/>
-                engagements</p>
-            <p class="text-white text-center text-sm"><span class="text-[55px] font-bold text-white">2X</span> <br/> increase in average <br/>
-                    client retainer</p>
-            </div>
-       </div>
-
-       <div className="flex  sm:flex-col lg:flex-row justify-between items-center py-20 ">
-       {/* <!--left part--> */}
-       <div className="space-y-2 ml-12">
-           <h1 className="font-mullish font-bold text-[40px] leading-[1.2] text-black">Why Choose Us</h1>
-           <div className="">
-            <p className="font-mullish text-[22px] leading-7 text-black opacity-70 ">
-            Our software understands that no two individuals are the same. Your health journey is unique, and we respect that. When you get started, you'll have the opportunity to input your specific details, from your psychosomatic constitution to your age, clinical condition, and symptoms. This information forms the foundation of your personalized recommendations.
-           </p>
-          </div>
+      <section className="relative bg-gray-300 w-full mt-10">
+        <div className="w-10/12 max-w-[1080px] mx-auto flex flex-col items-center py-16">
+          <p className="font-mullish font-semibold text-2xl leading-tight text-black text-center">
+            "Ayurveda is not just about treating diseases; it is about creating harmony in body, mind, and spirit." - Dr Vasant Lad
+          </p>
         </div>
-        {/* <!--right part--> */}
-       <img src={leftimg} alt=""
-       className="w-full max-w-[450px] relative mr-12 rounded-full"/>
-           
-       </div>
+      </section>
 
+      <div className="flex flex-col lg:flex-row justify-between items-center py-20 w-full max-w-[1080px] mx-auto px-4">
+        <img src={rightimg} alt="Right Image" className="w-full max-w-[580px] rounded-full" />
+        <div className="space-y-2 ml-4">
+          <h1 className="font-mullish font-bold text-3xl md:text-4xl leading-tight text-black">How It Works?</h1>
+          <p className="font-mullish text-lg md:text-xl leading-7 text-black opacity-70">
+            Our Ayurvedic Formulation Recommendation Software is a sophisticated blend of ancient wisdom and state-of-the-art technology...
+          </p>
+        </div>
+      </div>
 
-       
-       <section
-   className="relative bg-gray-300 w-full mt-6 ">
- 
-   <div className="w-10/12 max-w-[1080px] flex sm:flex-col lg:flex-row justify-between items-center mx-auto py-16 ">
-       <div className="space-y-8 ">
+      <div className='relative bg-green-800 w-full'>
+        <div className="w-10/12 max-w-[1080px] flex flex-col lg:flex-row justify-between items-center mx-auto py-16 text-white">
+          <p className="text-center text-sm"><span className="text-[55px] font-bold">80%+</span> <br /> reduction in average <br /> time to first response</p>
+          <p className="text-center text-sm"><span className="text-[55px] font-bold">1,002%</span> <br /> increase in total social <br /> engagements</p>
+          <p className="text-center text-sm"><span className="text-[55px] font-bold">2X</span> <br /> increase in average <br /> client retainer</p>
+        </div>
+      </div>
 
-           <div clclassNameass="flex felx-col gap-10 mx-auto"> 
-           <p className="font-mullish font-semibold text-[30px] leading-[1.2] text-black">Ayurveda is not just about treating diseases; it is about creating harmony in body, mind, and spirit." - Dr Vasant Lad</p>
-           
-           </div>   
-       </div>
-   </div>
-   
- 
-        </section>
-        <h1 className="font-mullish font-bold text-[40px] leading-[1.2] text-black m-4 relative left-[600px]">Customized Chat Bot</h1>
-        <ChatBox/>
+      <div className="flex flex-col lg:flex-row justify-between items-center py-20 w-full max-w-[1080px] mx-auto px-4">
+        <div className="space-y-2">
+          <h1 className="font-mullish font-bold text-3xl md:text-4xl leading-tight text-black">Why Choose Us</h1>
+          <p className="font-mullish text-lg md:text-xl leading-7 text-black opacity-70">
+            Our software understands that no two individuals are the same...
+          </p>
+        </div>
+        <img src={leftimg} alt="Left Image" className="w-full max-w-[450px] rounded-full" />
+      </div>
+
+      <section className="relative bg-gray-300 w-full mt-6">
+        <div className="w-10/12 max-w-[1080px] mx-auto flex flex-col items-center py-16">
+          <p className="font-mullish font-semibold text-2xl leading-tight text-black text-center">
+            "Ayurveda is not just about treating diseases; it is about creating harmony in body, mind, and spirit." - Dr Vasant Lad
+          </p>
+        </div>
+      </section>
+      <h1 className="font-mullish font-bold text-3xl md:text-4xl leading-tight text-black m-4">Customized Chat Bot</h1>
+      <ChatBox />
     </div>
-
-
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { FaBars, FaTimes } from 'react-icons/fa'; // Hamburger and Close icons
+import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa'; // Added FaUserCircle for profile icon
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -55,6 +55,13 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             </>
           ) : (
             <>
+              {/* Profile Button */}
+              <Link to="/profile" className='flex items-center'>
+                <button className='bg-gray-800 text-white py-2 px-4 rounded-md flex items-center'>
+                  <FaUserCircle className='text-white text-xl mr-2' />
+                  Profile
+                </button>
+              </Link>
               <button onClick={handleLogout} className='bg-gray-800 text-white py-2 px-4 rounded-md'>
                 Log Out
               </button>
@@ -96,6 +103,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
               </>
             ) : (
               <>
+                {/* Profile Button in Mobile Menu */}
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className='flex items-center bg-gray-800 text-white py-2 px-6 rounded-md'>
+                  <FaUserCircle className='text-white text-xl mr-2' />
+                  Profile
+                </Link>
                 <button onClick={() => { handleLogout(); setMenuOpen(false); }} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
                   Log Out
                 </button>

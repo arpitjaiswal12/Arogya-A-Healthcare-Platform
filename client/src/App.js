@@ -9,6 +9,9 @@ import About from "./pages/About"
 import Contact from "./pages/Contact"
 import { useEffect, useState } from 'react'
 import PrivateRoute from "./components/PrivateRoute";
+import OtpVerification from "./components/OtpVerification";
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,12 +27,9 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/login" element = {<Login  setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/signup" element={<Signup  setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/dashboard" element = {
-          <PrivateRoute isLoggedIn={isLoggedIn}>
-              <Home/>
-          </PrivateRoute>
-       
-        } />
+        <Route path="/otp" element={<OtpVerification/>} />
+        <Route path="/dashboard" element = {<Dashboard/>} />
+        
         
 
       </Routes>

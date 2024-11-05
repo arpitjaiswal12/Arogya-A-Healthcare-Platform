@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+/* html,
 body {
     overflow-x: hidden;
-}
+} */
+
+.react-tel-input .form-control {
+    @apply !w-full py-6 !text-base;
+  }
+  
+  .opt-container {
+    @apply flex justify-between gap-2;
+  }
+  .opt-container input {
+    @apply !mr-0 flex-1 py-5 outline-none;
+  }
