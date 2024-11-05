@@ -1,7 +1,7 @@
 // Importing necessary modules and packages
 const express = require("express");
 const app = express();
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/User.route.js");
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -19,16 +19,11 @@ database.connect();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(
 	cors({
 		origin: "*",
 		credentials: true,
-	})
-);
-app.use(
-	fileUpload({
-		useTempFiles: true,
-		tempFileDir: "/tmp/",
 	})
 );
 

@@ -2,6 +2,9 @@
 /backend/node_modules
 /client/node_modules
 
+
+/client/config/major_arogya_firebase-SDK.json
+
 # Environment variables
 /backend/.env
 /client/.env
