@@ -7,7 +7,6 @@ require("dotenv").config();
 // Environment variable for JWT secret
 const JWT_SECRET = process.env.JWT_SECRET; // Store in env file
 
-
 // Signup Controller
 exports.signup = async (req, res) => {
   const { firstName, lastName, email, contactNumber, password, accountType } =
@@ -66,24 +65,35 @@ exports.login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({
-      message: "Login successful",
-      token,
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        accountType: user.accountType,
-        image: user.image,
-        contactNumber: user.contactNumber,
-        dateOfBirth: user.dateOfBirth,
-        gender: user.gender,
-        bloodGroup: user.bloodGroup,
-      },
-    });
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({
+        message: "Login successful",
+        user: {
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          accountType: user.accountType,
+          image: user.image,
+          contactNumber: user.contactNumber,
+          dateOfBirth: user.dateOfBirth,
+          gender: user.gender,
+          bloodGroup: user.bloodGroup,
+        },
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    res.status(200).json("User has been logged out!");
+  } catch (error) {
+    next(error);
   }
 };
