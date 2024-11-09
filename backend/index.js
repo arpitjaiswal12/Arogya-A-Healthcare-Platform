@@ -1,13 +1,14 @@
 // Importing necessary modules and packages
 const express = require("express");
 const app = express();
-const userRoutes = require("./routes/User.route.js");
+const userRoutes = require("./routes/users.route.js");
+
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-// Setting up port number
+// Setting up port numbe
 const PORT = process.env.PORT || 4000;
 
 // Loading environment variables from .env file
@@ -29,6 +30,7 @@ app.use(
 
 // Setting up routes
 app.use("/api/v1/auth", userRoutes);
+// app.use("/api/v1/user", userRoutes);
 
 // Testing the server
 app.get("/", (req, res) => {
