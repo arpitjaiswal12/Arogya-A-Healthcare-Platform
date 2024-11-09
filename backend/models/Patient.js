@@ -7,33 +7,16 @@ const patientSchema = new mongoose.Schema({
     required: true,
   },
   medicalHistory: {
-    type: [
-      {
-        condition: { type: String, required: true },
-        diagnosisDate: { type: Date },
-        treatment: { type: String },
-      },
-    ],
-    default: [],
+    type:String,
   },
   medications: {
-    type: [
-      {
-        name: { type: String, required: true },
-        dosage: { type: String },
-        frequency: { type: String },
-      },
-    ],
-    default: [],
+    type:String,
   },
   allergies: {
-    type: [String],
-    default: [],
+    type: String,
   },
   emergencyContact: {
-    name: { type: String },
-    relation: { type: String },
-    contactNumber: { type: String },
+    type: String
   },
 }, { timestamps: true });
 
