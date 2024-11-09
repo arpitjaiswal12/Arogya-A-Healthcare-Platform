@@ -1,126 +1,138 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa'; // Added FaUserCircle for profile icon
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, NavLink, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { navBarList } from "./Constants/index.js";
+import { motion } from "framer-motion";
+// import logo from "../assets/images/logo.png";
+import { MdClose } from "react-icons/md";
+import { HiMenuAlt2 } from "react-icons/hi";
 
-const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    toast.success("Logged Out");
-  };
+  const [showMenu, setShowMenu] = useState(true);
+  const [sidenav, setSidenav] = useState(false);
+  const [category, setCategory] = useState(false);
+  const [brand, setBrand] = useState(false);
+  const location = useLocation();
+  useEffect(() => {
+    let ResponsiveMenu = () => {
+      if (window.innerWidth < 667) {
+        setShowMenu(false);
+      } else {
+        setShowMenu(true);
+      }
+    };
+    ResponsiveMenu();
+    window.addEventListener("resize", ResponsiveMenu);
+  }, []);
 
   return (
-    <div className='w-full bg-gray-100 shadow-md'>
-      <div className='flex justify-between items-center w-11/12 max-w-[1160px] py-4 mx-auto'>
-        
-        <Link to="/" className='text-black font-bold text-[30px]'>
-          Arogya
+    <header className="bg-white shadow-md">
+      <div className="flex justify-between items-center max-w-6xl mx-auto px-2 py-2 h-14 sm:p-2">
+        <Link to="/">
+          <h1 className="font-serif font-bold text-sm sm:text-2xl flex flex-wrap">
+            <span className="text-green-800">Arogya</span>
+            {/* <span className="text-red-500">Bazaar</span> */}
+          </h1>
+          {/* <img src={logo} alt="" className=" w-40 object-cover" /> */}
         </Link>
-
-        {/* Hamburger Icon for Mobile */}
-        <button onClick={() => setMenuOpen(!menuOpen)} className="text-black text-3xl lg:hidden focus:outline-none">
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </button>
-
-        {/* Desktop Menu */}
-        <nav className='hidden lg:flex'>
-          <ul className='text-black text-[20px] font-bold flex gap-x-6'>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-          </ul>
-        </nav>
-
-        {/* Auth Buttons for Desktop */}
-        <div className='hidden lg:flex items-center gap-x-4'>
-          {!isLoggedIn ? (
-            <>
-              <Link to="/login">
-                <button className='bg-gray-800 text-white py-2 px-4 rounded-md'>
-                  Log in
-                </button>
+        <div>
+          {showMenu && (
+            <motion.ul
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center w-auto z-50 p-0 gap-2"
+            >
+              <>
+                {navBarList.map(({ _id, title, link }) => (
+                  <NavLink
+                    key={_id}
+                    className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#454444] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+                    to={link}
+                    state={{ data: location.pathname.split("/")[1] }}
+                  >
+                    <li>{title}</li>
+                  </NavLink>
+                ))}
+              </>
+              <Link to="/profile">
+                {currentUser ? ( // profile image
+                  <img
+                    className="rounded-full h-7 w-7 object-cover"
+                    src={currentUser.user.image}
+                    alt="profile"
+                  />
+                ) : (
+                  <li className=" flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0">
+                    {" "}
+                    <Link to="/login">Login</Link>
+                  </li>
+                )}
               </Link>
-              <Link to="/signup">
-                <button className='bg-gray-800 text-white py-2 px-4 rounded-md'>
-                  Sign up
-                </button>
-              </Link>
-              <Link to="https://docmedsync.vercel.app/" target="_blank" rel="noopener noreferrer">
-                <button className='bg-gray-800 text-white py-2 px-4 rounded-md'>
-                  Web3 File Sharing
-                </button>
-              </Link>
-            </>
-          ) : (
-            <>
-              {/* Profile Button */}
-              <Link to="/profile" className='flex items-center'>
-                <button className='bg-gray-800 text-white py-2 px-4 rounded-md flex items-center'>
-                  <FaUserCircle className='text-white text-xl mr-2' />
-                  Profile
-                </button>
-              </Link>
-              <button onClick={handleLogout} className='bg-gray-800 text-white py-2 px-4 rounded-md'>
-                Log Out
-              </button>
-              <Link to="/dashboard">
-                <button className='bg-gray-800 text-white py-2 px-4 rounded-md'>
-                  Dashboard
-                </button>
-              </Link>
-            </>
+            </motion.ul>
+          )}
+          <HiMenuAlt2
+            onClick={() => setSidenav(!sidenav)}
+            className="inline-block md:hidden cursor-pointer w-8 h-6 absolute top-6 right-4"
+          />
+          {sidenav && (
+            <div className="fixed top-0 left-0 w-full h-screen bg-black text-gray-200 bg-opacity-80 z-50">
+              <motion.div
+                initial={{ x: -300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="w-[80%] h-full relative"
+              >
+                <div className="w-full h-full bg-primeColor p-6">
+                  <img className=" w-16 mb-6" alt="logoLight" />
+                  <ul className="text-gray-200 flex flex-col gap-2">
+                    {navBarList.map((item) => (
+                      <li
+                        className="font-normal hover:font-bold items-center text-lg text-gray-200 hover:underline underline-offset-[4px] decoration-[1px] hover:text-white md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+                        key={item._id}
+                      >
+                        <NavLink
+                          to={item.link}
+                          state={{ data: location.pathname.split("/")[1] }}
+                          onClick={() => setSidenav(false)}
+                        >
+                          {item.title}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to="/profile">
+                    {currentUser ? ( // profile image
+                      <img
+                        className="rounded-full h-7 w-7 object-cover mt-4"
+                        // src={currentUser}
+                        alt="profile"
+                      />
+                    ) : (
+                      <li className="list-none font-normal hover:font-bold items-center text-lg text-gray-200 hover:underline underline-offset-[4px] decoration-[1px] hover:text-white md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0">
+                        {" "}
+                        <Link to="/login" onClick={() => setSidenav(false)}>
+                          Login
+                        </Link>
+                      </li>
+                    )}
+                  </Link>
+                </div>
+                <span
+                  onClick={() => setSidenav(false)}
+                  className="w-8 h-8 border-[1px] border-gray-300 absolute top-2 -right-10 text-gray-300 text-2xl flex justify-center items-center cursor-pointer hover:border-red-500 hover:text-red-500 duration-300"
+                >
+                  <MdClose />
+                </span>
+              </motion.div>
+            </div>
           )}
         </div>
-
       </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className='lg:hidden bg-gray-100'>
-          <nav className='flex flex-col items-center gap-y-4 py-4'>
-            <Link to="/" onClick={() => setMenuOpen(false)} className='text-black text-[20px] font-bold'>
-              Home
-            </Link>
-            <Link to="/about" onClick={() => setMenuOpen(false)} className='text-black text-[20px] font-bold'>
-              About
-            </Link>
-            <Link to="/contact" onClick={() => setMenuOpen(false)} className='text-black text-[20px] font-bold'>
-              Contact
-            </Link>
-            {!isLoggedIn ? (
-              <>
-                <Link to="/login" onClick={() => setMenuOpen(false)} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  Log in
-                </Link>
-                <Link to="/signup" onClick={() => setMenuOpen(false)} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  Sign up
-                </Link>
-                <Link to="https://docmedsync.vercel.app/" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  Web3 File Sharing
-                </Link>
-              </>
-            ) : (
-              <>
-                {/* Profile Button in Mobile Menu */}
-                <Link to="/profile" onClick={() => setMenuOpen(false)} className='flex items-center bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  <FaUserCircle className='text-white text-xl mr-2' />
-                  Profile
-                </Link>
-                <button onClick={() => { handleLogout(); setMenuOpen(false); }} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  Log Out
-                </button>
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className='bg-gray-800 text-white py-2 px-6 rounded-md'>
-                  Dashboard
-                </Link>
-              </>
-            )}
-          </nav>
-        </div>
-      )}
-    </div>
+    </header>
   );
-};
-
-export default Navbar;
+}

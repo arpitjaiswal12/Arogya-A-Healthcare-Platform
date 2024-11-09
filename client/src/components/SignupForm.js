@@ -53,13 +53,14 @@ const SignupForm = ({ setIsLoggedIn }) => {
                 body: JSON.stringify(accountData)
             });
 
-            if (!response.ok) {
-                throw new Error("Signup failed");
-            }
+            
 
             const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message);
+            }
             toast.success("Account Created Successfully");
-            setIsLoggedIn(true); // Assuming you set the user logged in state here
+            // setIsLoggedIn(true); // Assuming you set the user logged in state here
             navigate("/login"); // Redirect to login page
         } catch (error) {
             toast.error(error.message || "An error occurred during signup");

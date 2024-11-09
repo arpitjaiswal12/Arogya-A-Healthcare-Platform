@@ -10,9 +10,9 @@ const Home = ({ isLoggedIn }) => {
   return (
     <div className="flex flex-col items-center">
 
-      <div className="relative w-full max-w-[900px]">
+      <div className="w-full max-w-[900px] mt-10">
         <img src={bg} alt="Background" className="w-full h-auto" />
-        <div className='absolute top-1/2 transform -translate-y-1/2 left-1/2 transform -translate-x-1/2 text-center'>
+        <div className='absolute top-1/3 -translate-y-1/2 left-1/2 transform -translate-x-1/2 text-center'>
           <h1 className='text-black font-serif font-bold text-3xl md:text-4xl'>Unlock the Power of Telemedicine Wisdom</h1>
           <h1 className='text-black font-bold text-lg md:text-xl'>Your Personalized Ayurvedic Healthcare Companion</h1>
           <div className="flex flex-col md:flex-row justify-center space-x-0 md:space-x-4 mt-4">

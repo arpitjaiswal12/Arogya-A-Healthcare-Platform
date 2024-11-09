@@ -15,7 +15,6 @@ const OtpVerification = () => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Function to set up reCAPTCHA verification
   function onCaptchaVerify() {
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
@@ -34,13 +33,10 @@ const OtpVerification = () => {
     }
   }
 
-  // Function to handle sign up
   function onSignup() {
     setLoading(true);
-
-    // Set up the recaptcha verifier and start the OTP process
     onCaptchaVerify();
-    
+
     const appVerifier = window.recaptchaVerifier;
     const formattedPhone = "+" + phone;
 
@@ -54,11 +50,10 @@ const OtpVerification = () => {
       .catch((error) => {
         console.error(error);
         setLoading(false);
-        window.recaptchaVerifier = null; // Reset reCAPTCHA on error
+        window.recaptchaVerifier = null;
       });
   }
 
-  // Function to handle OTP verification
   function onOtpVerify() {
     setLoading(true);
     window.confirmationResult
@@ -75,25 +70,25 @@ const OtpVerification = () => {
   }
 
   return (
-    <section className="bg-emerald-500 flex items-center justify-center h-screen">
-      <div>
+    <div className="w-11/12 max-w-[1080px] mx-auto mt-8">
+      <section className="bg-white border-[3px] rounded-md shadow-md p-6">
         <Toaster toastOptions={{ duration: 4000 }} />
         <div id="recaptcha-container"></div>
         {user ? (
-          <h2 className="text-center text-white font-medium text-2xl">
+          <h2 className="text-center text-black font-bold text-2xl">
             👍 Login Successful
           </h2>
         ) : (
-          <div className="w-80 flex flex-col gap-4 rounded-lg p-4">
-            <h1 className="text-center leading-normal text-white font-medium text-3xl mb-6">
-              Welcome to <br /> CODE A PROGRAM
+          <div className="flex flex-col items-center gap-4 rounded-md p-4">
+            <h1 className="text-center text-2xl font-bold text-black mb-6">
+              Welcome to CODE A PROGRAM
             </h1>
             {showOtpInput ? (
               <>
-                <div className="bg-white text-emerald-500 w-fit mx-auto p-4 rounded-full">
+                <div className="bg-black text-white w-fit mx-auto p-4 rounded-full mb-4">
                   <BsFillShieldLockFill size={30} />
                 </div>
-                <label className="font-bold text-xl text-white text-center">
+                <label className="font-semibold text-lg text-gray-700 text-center mb-2">
                   Enter your OTP
                 </label>
                 <OtpInput
@@ -103,42 +98,42 @@ const OtpVerification = () => {
                   otpType="number"
                   disabled={false}
                   autoFocus
-                  className="opt-container"
+                  className="opt-container border-[3px] rounded-md p-2 text-center text-lg"
                 />
                 <button
                   onClick={onOtpVerify}
-                  className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                  className="w-full bg-black rounded-md font-medium text-white px-4 py-2 mt-6 hover:bg-gray-800 transition duration-200"
                 >
                   {loading && (
-                    <CgSpinner size={20} className="mt-1 animate-spin" />
+                    <CgSpinner size={20} className="animate-spin inline mr-2" />
                   )}
-                  <span>Verify OTP</span>
+                  Verify OTP
                 </button>
               </>
             ) : (
               <>
-                <div className="bg-white text-emerald-500 w-fit mx-auto p-4 rounded-full">
+                <div className="bg-black text-white w-fit mx-auto p-4 rounded-full mb-4">
                   <BsTelephoneFill size={30} />
                 </div>
-                <label className="font-bold text-xl text-white text-center">
+                <label className="font-semibold text-lg text-gray-700 text-center mb-2">
                   Verify your phone number
                 </label>
                 <PhoneInput country={"in"} value={phone} onChange={setPhone} />
                 <button
                   onClick={onSignup}
-                  className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+                  className="w-full bg-black rounded-md font-medium text-white px-4 py-2 mt-6 hover:bg-gray-800 transition duration-200"
                 >
                   {loading && (
-                    <CgSpinner size={20} className="mt-1 animate-spin" />
+                    <CgSpinner size={20} className="animate-spin inline mr-2" />
                   )}
-                  <span>Send code via SMS</span>
+                  Send code via SMS
                 </button>
               </>
             )}
           </div>
         )}
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

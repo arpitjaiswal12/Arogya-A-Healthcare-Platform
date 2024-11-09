@@ -3,14 +3,17 @@ import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
-import store from './redux/Store.js';
+import { PersistGate } from 'redux-persist/integration/react'
+import {store, persistor } from './redux/Store.js';
 import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-        <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
     </Provider>,
     <Toaster/>
   </BrowserRouter>

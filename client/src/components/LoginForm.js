@@ -1,112 +1,123 @@
-import React, { useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../redux/Slices/userSlice.js'; // Adjust the path as necessary
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import OAuth from '../components/OAuth';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../redux/Slices/userSlice.js";
+// import OAuth from "../Components/OAuth";
 
-const LoginForm = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch(); // Initialize the dispatch function
+// Hide Show password in react
+import { Icon } from "react-icons-kit";
+import { eyeOff } from "react-icons-kit/feather/eyeOff";
+import { eye } from "react-icons-kit/feather/eye";
 
-    const [formData, setFormData] = useState({
-        email: "", password: ""
+export default function Login() {
+  const [formData, setFormData] = useState({});
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
+
+  // password show and hide
+  const [password, setPassword] = useState("");
+  const [type, setType] = useState("password");
+  const [icon, setIcon] = useState(eyeOff);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleToggle = () => {
+    if (type === "password") {
+      setIcon(eye);
+      setType("text");
+    } else {
+      setIcon(eyeOff);
+      setType("password");
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
     });
+    setPassword(e.target.value);
+  };
+  // console.log(formData)
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    function changeHandler(event) {
-        setFormData((prevData) => ({
-            ...prevData,
-            [event.target.name]: event.target.value
-        }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // setLoading(true);
+      dispatch(loginStart());
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      // console.log(data);
+      if (data.success === false) {
+        // setLoading(false);
+        // setError(data.message);
+        dispatch(loginFailure(data.message));
+        return;
+      }
+      // setLoading(false);
+      // setError(null);
+      console.log(data)
+      dispatch(loginSuccess(data));
+      navigate("/");
+    } catch (error) {
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(loginFailure(error.message));
     }
+  };
+  return (
+    <div className="p-3 max-w-lg mx-auto">
+      <h1 className="text-3xl text-center font-semibold my-7">Login</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="email"
+          placeholder="Email"
+          className="border p-3 rounded-lg"
+          id="email"
+          onChange={handleChange}
+        />
+        <div className="mb-4 flex">
+          <input
+            type={type}
+            name="password"
+            placeholder="Password"
+            className="border p-3 rounded-lg w-full"
+            id="password"
+            onChange={handleChange}
+          />
+          <span className="flex justify-around items-center" onClick={handleToggle}>
+            <Icon className="absolute cursor-pointer mr-10" icon={icon} size={20} />
+          </span>
+        </div>
 
-    async function submitHandler(event) {
-        event.preventDefault();
-
-        try {
-            const response = await fetch('http://localhost:8002/api/v1/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Set the token and user data in cookies
-                Cookies.set('token', data.token, { expires: 1 });
-                Cookies.set('user', JSON.stringify(data.user), { expires: 1 });
-
-                // Dispatch the user data to the Redux store
-                dispatch(setUser(data.user));
-
-                toast.success("Logged In");
-                navigate("/dashboard");
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            console.error("Error during login:", error);
-            toast.error("Login failed. Please try again.");
-        }
-    }
-
-    return (
-        <form onSubmit={submitHandler} className="flex flex-col w-full gap-y-4 mt-6">
-            <label className='w-full'>
-                <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>
-                    Email Address<sup className='text-pink-200'>*</sup>
-                </p>
-                <input
-                    required
-                    type="email"
-                    value={formData.email}
-                    onChange={changeHandler}
-                    placeholder="Enter email address"
-                    name="email"
-                    className='bg-white border-[5px] rounded-[0.5rem] text-black w-full p-[12px]'
-                />
-            </label>
-
-            <label className='w-full relative'>
-                <p className='text-[0.875rem] text-black mb-1 leading-[1.375rem]'>
-                    Password<sup className='text-pink-200'>*</sup>
-                </p>
-                <input
-                    required
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={changeHandler}
-                    placeholder="Enter Password"
-                    name="password"
-                    className='bg-white border-[5px] rounded-[0.5rem] text-black w-full p-[12px]'
-                />
-
-                <span
-                    className='absolute right-3 top-[38px] cursor-pointer'
-                    onClick={() => setShowPassword((prev) => !prev)}>
-                    {showPassword ? 
-                        (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' />) : 
-                        (<AiOutlineEye fontSize={24} fill='#AFB2BF' />)}
-                </span>
-
-                <Link to="#">
-                    <p className='text-xs mt-1 text-blue-100 max-w-max ml-auto'>
-                        Forgot Password
-                    </p>
-                </Link>
-            </label>
-
-            <button className='bg-black rounded-[8px] font-medium text-white px-[12px] py-[8px] mt-6'>
-                Sign In
-            </button>
-        </form>
-    );
+        <button
+          disabled={loading}
+          className="bg-black text-white p-3 font-medium rounded-lg uppercase hover:opacity-90 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Get started"}
+        </button>
+        {/* <OAuth /> */}
+      </form>
+      <div className="flex gap-2 mt-5">
+        <p>Dont have an account?</p>
+        <Link to={"/signup"}>
+          <span className="text-blue-700">Sign Up</span>
+        </Link>
+      </div>
+      {error && <p className="text-red-500 mt-5">{error}</p>}
+    </div>
+  );
 }
-
-export default LoginForm;
