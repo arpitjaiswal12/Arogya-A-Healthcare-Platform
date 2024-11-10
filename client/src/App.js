@@ -10,6 +10,8 @@ import Contact from "./pages/Contact";
 import { useEffect, useState } from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import OtpVerification from "./components/OtpVerification";
+import DoctorsTable from "./components/DoctorsTable.js";
+import DiseaseSearch from "./pages/DiseaseSearch.js";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/otp" element={<OtpVerification />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/get-checkup-done" element={<DoctorsTable />} />
+        <Route path="/search-disease" element={<DiseaseSearch />} />
       </Routes>
     </div>
   );
