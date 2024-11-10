@@ -17,7 +17,7 @@ import { BsGithub } from 'react-icons/bs';
 
 const About = () => {
   return (
-    <div className=" w-full mt-4">
+    <div className="w-full mt-4">
       {/* Section Header */}
       <section className="relative flex flex-col items-center text-center py-8">
         <div className="w-10/12 max-w-[1080px]">
