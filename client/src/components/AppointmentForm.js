@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid"; // Import uuid library for unique IDs
 
 const AppointmentForm = ({ doctor, user }) => {
   const [description, setDescription] = useState("");
 
   const handlePayment = async () => {
+    const transactionID = uuidv4(); // Generate unique transaction ID
+
     const paymentData = {
+      transactionID, // Pass transaction ID to payment data
       name: `${user.firstName} ${user.lastName}`,
       mobileNumber: user.contactNumber,
       amount: doctor.consultantFee,
@@ -14,7 +18,7 @@ const AppointmentForm = ({ doctor, user }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/payment/create-order",
+        `${process.env.REACT_APP_BACKEND_URL}api/payment/create-order`,
         {
           method: "POST",
           headers: {
