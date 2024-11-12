@@ -3,7 +3,7 @@ import { Link, useNavigate, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { navBarList } from "./Constants/index.js";
 import { motion } from "framer-motion";
-// import logo from "../assets/images/logo.png";
+import logo from "../assets/Arogya_logo.png"; // Import your logo here
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 
@@ -17,8 +17,9 @@ export default function Header() {
   const [category, setCategory] = useState(false);
   const [brand, setBrand] = useState(false);
   const location = useLocation();
+
   useEffect(() => {
-    let ResponsiveMenu = () => {
+    const ResponsiveMenu = () => {
       if (window.innerWidth < 667) {
         setShowMenu(false);
       } else {
@@ -32,13 +33,15 @@ export default function Header() {
   return (
     <header className="bg-white shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto px-2 py-2 h-14 sm:p-2">
-        <Link to="/">
+        <Link to="/" className="flex items-center">
+          {/* Logo Image */}
+          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
+          {/* Logo Text */}
           <h1 className="font-serif font-bold text-sm sm:text-2xl flex flex-wrap">
             <span className="text-green-800">Arogya</span>
-            {/* <span className="text-red-500">Bazaar</span> */}
           </h1>
-          {/* <img src={logo} alt="" className=" w-40 object-cover" /> */}
         </Link>
+
         <div>
           {showMenu && (
             <motion.ul
@@ -60,15 +63,14 @@ export default function Header() {
                 ))}
               </>
               <Link to="/profile">
-                {currentUser ? ( // profile image
+                {currentUser ? (
                   <img
                     className="rounded-full h-7 w-7 object-cover"
                     src={currentUser.user.image}
                     alt="profile"
                   />
                 ) : (
-                  <li className=" flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0">
-                    {" "}
+                  <li className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#454444] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0">
                     <Link to="/login">Login</Link>
                   </li>
                 )}
@@ -88,7 +90,8 @@ export default function Header() {
                 className="w-[80%] h-full relative"
               >
                 <div className="w-full h-full bg-primeColor p-6">
-                  <img className=" w-16 mb-6" alt="logoLight" />
+                  <img src={logo} alt="Logo" className="w-10 h-10 mb-4" />
+                  <span className="text-green-800">Arogya</span>
                   <ul className="text-gray-200 flex flex-col gap-2">
                     {navBarList.map((item) => (
                       <li
@@ -106,15 +109,14 @@ export default function Header() {
                     ))}
                   </ul>
                   <Link to="/profile">
-                    {currentUser ? ( // profile image
+                    {currentUser ? (
                       <img
                         className="rounded-full h-7 w-7 object-cover mt-4"
-                        // src={currentUser}
+                        src={currentUser.user.image}
                         alt="profile"
                       />
                     ) : (
                       <li className="list-none font-normal hover:font-bold items-center text-lg text-gray-200 hover:underline underline-offset-[4px] decoration-[1px] hover:text-white md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0">
-                        {" "}
                         <Link to="/login" onClick={() => setSidenav(false)}>
                           Login
                         </Link>

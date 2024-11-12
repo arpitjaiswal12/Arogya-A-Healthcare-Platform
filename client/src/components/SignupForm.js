@@ -45,7 +45,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:8002/api/v1/auth/signup", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/auth/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -68,7 +68,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
     }
 
     return (
-        <div>
+        <div className='mt-10'>
             {/* Patient-Doctor tab */}
             <div className='flex bg-white border-[5px] p-1 gap-x-1 my-6 rounded-full max-w-max'>
                 <button

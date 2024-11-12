@@ -25,11 +25,6 @@ const Home = ({ isLoggedIn }) => {
                 Browse Herbs
               </button>
             </Link>
-            {/* <Link to="https://sehat-commitandpush.netlify.app/" target="_blank">
-              <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
-                Get Your Checkup Done
-              </button>
-            </Link> */}
             <Link to="/get-checkup-done">
               <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
                 Get Your Checkup Done
@@ -138,7 +133,7 @@ const Home = ({ isLoggedIn }) => {
         </div>
       </section>
       <h1 className="font-mullish font-bold text-3xl md:text-4xl leading-tight text-black m-4">
-        Customized Chat Bot
+        Chat Bot
       </h1>
       <ChatBox />
     </div>

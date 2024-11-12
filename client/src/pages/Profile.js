@@ -15,10 +15,9 @@ import { eye } from "react-icons-kit/feather/eye";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
-  console.log(currentUser);
+  console.log("current user :", currentUser);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [password, setPassword] = useState("");
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeOff);
   const dispatch = useDispatch();
@@ -28,26 +27,27 @@ export default function Profile() {
     console.log(currentUser);
     if (currentUser) {
       setFormData({
-        firstName: currentUser.user.firstName,
-        lastName: currentUser.user.lastName,
-        email: currentUser.user.email,
-        contactNumber: currentUser.user.contactNumber,
-        image: currentUser.user.image,
-        accountType: currentUser.user.accountType,
+        firstName: currentUser?.user?.firstName,
+        lastName: currentUser?.user?.lastName,
+        email: currentUser?.user?.email,
+        contactNumber: currentUser?.user?.contactNumber,
+        image: currentUser?.user?.image,
+        accountType: currentUser?.user?.accountType,
         password: "",
-        dateOfBirth: currentUser.user.dateOfBirth,
-        gender: currentUser.user.gender,
-        bloodGroup: currentUser.user.bloodGroup,
-        availableTimeSlot: currentUser.availableTimeSlot || "",
-        consultantFee: currentUser.consultantFee || "",
-        specialization: currentUser.specialization || "",
-        degrees: currentUser.degrees || "",
-        experience: currentUser.experience || "",
-        certification: currentUser.certification || "",
-        allergies: currentUser.allergies || "",
-        emergencyContact: currentUser.emergencyContact || "",
-        medicalHistory: currentUser.medicalHistory || "",
-        medications: currentUser.medications || "",
+        dateOfBirth: currentUser?.user?.dateOfBirth,
+        gender: currentUser?.user?.gender,
+        bloodGroup: currentUser?.user?.bloodGroup,
+        availableTimeSlot: currentUser?.availableTimeSlot || "",
+        consultantFee: currentUser?.consultantFee || "",
+        specialization: currentUser?.specialization || "",
+        degrees: currentUser?.degrees || "",
+        experience: currentUser?.experience || "",
+        certification: currentUser?.certification || "",
+        allergies:
+          currentUser?.currentType?.allergies || currentUser?.allergies || "",
+        emergencyContact: currentUser?.currentType?.emergencyContact || "",
+        medicalHistory: currentUser?.currentType?.medicalHistory || "",
+        medications: currentUser?.currentType?.medications || "",
       });
     }
   }, [currentUser]);
@@ -73,7 +73,7 @@ export default function Profile() {
     try {
       dispatch(updateUserStart());
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}api/v1/auth/update-profile/${currentUser.user.id}`,
+        `${process.env.REACT_APP_BACKEND_URL}api/v1/user/update-profile/${currentUser.user.id}`,
         {
           method: "POST",
           headers: {
@@ -331,46 +331,133 @@ export default function Profile() {
                   onChange={handleChange}
                 >
                   <option value="">Select Specialization</option>
-                  <option value="Cardiology">Cardiology</option>
-                  <option value="Dermatology">Dermatology</option>
-                  <option value="Endocrinology">Endocrinology</option>
-                  <option value="Gastroenterology">Gastroenterology</option>
-                  <option value="General Surgery">General Surgery</option>
-                  <option value="Hematology">Hematology</option>
-                  <option value="Neurology">Neurology</option>
-                  <option value="Oncology">Oncology</option>
-                  <option value="Orthopedics">Orthopedics</option>
-                  <option value="Pediatrics">Pediatrics</option>
-                  <option value="Psychiatry">Psychiatry</option>
-                  <option value="Pulmonology">Pulmonology</option>
-                  <option value="Radiology">Radiology</option>
-                  <option value="Rheumatology">Rheumatology</option>
-                  <option value="Urology">Urology</option>
-                  <option value="Nephrology">Nephrology</option>
-                  <option value="Obstetrics and Gynecology">
-                    Obstetrics and Gynecology
+                  <option value="Cardiology - Heart Attack, Hypertension, Arrhythmia, Coronary Artery Disease, Heart Failure">
+                    Cardiology - "Heart Attack", "Hypertension", "Arrhythmia",
+                    "Coronary Artery Disease", "Heart Failure"
                   </option>
-                  <option value="Ophthalmology">Ophthalmology</option>
-                  <option value="Otolaryngology (ENT)">
-                    Otolaryngology (ENT)
+                  <option value="Dermatology - Eczema, Psoriasis, Acne, Skin Cancer, Rosacea">
+                    Dermatology - "Eczema", "Psoriasis", "Acne", "Skin Cancer",
+                    "Rosacea"
                   </option>
-                  <option value="Plastic Surgery">Plastic Surgery</option>
-                  <option value="Anesthesiology">Anesthesiology</option>
-                  <option value="Family Medicine">Family Medicine</option>
-                  <option value="Infectious Disease">Infectious Disease</option>
-                  <option value="Geriatrics">Geriatrics</option>
-                  <option value="Emergency Medicine">Emergency Medicine</option>
-                  <option value="Pathology">Pathology</option>
-                  <option value="Sports Medicine">Sports Medicine</option>
-                  <option value="Allergy and Immunology">
-                    Allergy and Immunology
+                  <option value="Endocrinology - Diabetes, Thyroid Disease, Osteoporosis, Cushing's Syndrome, Addison's Disease">
+                    Endocrinology - "Diabetes", "Thyroid Disease",
+                    "Osteoporosis", "Cushing's Syndrome", "Addison's Disease"
                   </option>
-                  <option value="Pain Management">Pain Management</option>
-                  <option value="Preventive Medicine">
-                    Preventive Medicine
+                  <option value="Gastroenterology - IBS, GERD, Hepatitis, Crohn's Disease, Ulcerative Colitis">
+                    Gastroenterology - "IBS", "GERD", "Hepatitis", "Crohn's
+                    Disease", "Ulcerative Colitis"
                   </option>
-                  <option value="Neurosurgery">Neurosurgery</option>
-                  <option value="Vascular Surgery">Vascular Surgery</option>
+                  <option value="Neurology - Stroke, Alzheimer's Disease, Migraine, Epilepsy, Multiple Sclerosis">
+                    Neurology - "Stroke", "Alzheimer's Disease", "Migraine",
+                    "Epilepsy", "Multiple Sclerosis"
+                  </option>
+                  <option value="Oncology - Breast Cancer, Lung Cancer, Lymphoma, Leukemia, Prostate Cancer">
+                    Oncology - "Breast Cancer", "Lung Cancer", "Lymphoma",
+                    "Leukemia", "Prostate Cancer"
+                  </option>
+                  <option value="Orthopedics - Arthritis, Fracture, Osteoporosis, Tendonitis, Carpal Tunnel Syndrome">
+                    Orthopedics - "Arthritis", "Fracture", "Osteoporosis",
+                    "Tendonitis", "Carpal Tunnel Syndrome"
+                  </option>
+                  <option value="Pediatrics - Asthma, Chickenpox, Common Cold, ADHD, Measles">
+                    Pediatrics - "Asthma", "Chickenpox", "Common Cold", "ADHD",
+                    "Measles"
+                  </option>
+                  <option value="Psychiatry - Depression, Anxiety, Bipolar Disorder, Schizophrenia, PTSD">
+                    Psychiatry - "Depression", "Anxiety", "Bipolar Disorder",
+                    "Schizophrenia", "PTSD"
+                  </option>
+                  <option value="Pulmonology - Asthma, COPD, Lung Cancer, Tuberculosis, Pneumonia">
+                    Pulmonology - "Asthma", "COPD", "Lung Cancer",
+                    "Tuberculosis", "Pneumonia"
+                  </option>
+                  <option value="Radiology - Bone Fracture Detection, Lung Cancer Screening, Breast Cancer Detection, MRI Abnormalities, CT Scans">
+                    Radiology - "Bone Fracture Detection", "Lung Cancer
+                    Screening", "Breast Cancer Detection", "MRI Abnormalities",
+                    "CT Scans"
+                  </option>
+                  <option value="Rheumatology - Rheumatoid Arthritis, Lupus, Gout, Osteoarthritis, Scleroderma">
+                    Rheumatology - "Rheumatoid Arthritis", "Lupus", "Gout",
+                    "Osteoarthritis", "Scleroderma"
+                  </option>
+                  <option value="Urology - Kidney Stones, UTI, Prostate Cancer, Bladder Incontinence, Erectile Dysfunction">
+                    Urology - "Kidney Stones", "UTI", "Prostate Cancer",
+                    "Bladder Incontinence", "Erectile Dysfunction"
+                  </option>
+                  <option value="Nephrology - Chronic Kidney Disease, Acute Kidney Injury, Kidney Stones, Polycystic Kidney Disease, Nephrotic Syndrome">
+                    Nephrology - "Chronic Kidney Disease", "Acute Kidney
+                    Injury", "Kidney Stones", "Polycystic Kidney Disease",
+                    "Nephrotic Syndrome"
+                  </option>
+                  <option value="Obstetrics and Gynecology - Pregnancy Complications, Endometriosis, Menopause, PCOS, Uterine Fibroids">
+                    Obstetrics and Gynecology - "Pregnancy Complications",
+                    "Endometriosis", "Menopause", "PCOS", "Uterine Fibroids"
+                  </option>
+                  <option value="Ophthalmology - Cataracts, Glaucoma, Macular Degeneration, Diabetic Retinopathy, Conjunctivitis">
+                    Ophthalmology - "Cataracts", "Glaucoma", "Macular
+                    Degeneration", "Diabetic Retinopathy", "Conjunctivitis"
+                  </option>
+                  <option value="Otolaryngology (ENT) - Sinusitis, Tonsillitis, Hearing Loss, Vertigo, Sleep Apnea">
+                    Otolaryngology (ENT) - "Sinusitis", "Tonsillitis", "Hearing
+                    Loss", "Vertigo", "Sleep Apnea"
+                  </option>
+                  <option value="Plastic Surgery - Rhinoplasty Complications, Breast Reconstruction, Skin Grafts, Facial Trauma, Burn Repair">
+                    Plastic Surgery - "Rhinoplasty Complications", "Breast
+                    Reconstruction", "Skin Grafts", "Facial Trauma", "Burn
+                    Repair"
+                  </option>
+                  <option value="Anesthesiology - Chronic Pain, Surgical Anesthesia Management, Pain Management, Postoperative Pain, Nerve Blocks">
+                    Anesthesiology - "Chronic Pain", "Surgical Anesthesia
+                    Management", "Pain Management", "Postoperative Pain", "Nerve
+                    Blocks"
+                  </option>
+                  <option value="Family Medicine - Hypertension, Diabetes Management, Common Cold, Asthma, Preventive Care">
+                    Family Medicine - "Hypertension", "Diabetes Management",
+                    "Common Cold", "Asthma", "Preventive Care"
+                  </option>
+                  <option value="Infectious Disease - HIV/AIDS, Tuberculosis, COVID-19, Hepatitis B, Malaria">
+                    Infectious Disease - "HIV/AIDS", "Tuberculosis", "COVID-19",
+                    "Hepatitis B", "Malaria"
+                  </option>
+                  <option value="Geriatrics - Dementia, Osteoporosis, Hypertension, Arthritis, Alzheimer's Disease">
+                    Geriatrics - "Dementia", "Osteoporosis", "Hypertension",
+                    "Arthritis", "Alzheimer's Disease"
+                  </option>
+                  <option value="Emergency Medicine - Trauma, Acute Heart Attack, Stroke, Severe Allergies, Poisoning">
+                    Emergency Medicine - "Trauma", "Acute Heart Attack",
+                    "Stroke", "Severe Allergies", "Poisoning"
+                  </option>
+                  <option value="Pathology - Cancer Diagnosis, Infectious Disease Identification, Biopsy Analysis, Blood Disorders, Histopathology">
+                    Pathology - "Cancer Diagnosis", "Infectious Disease
+                    Identification", "Biopsy Analysis", "Blood Disorders",
+                    "Histopathology"
+                  </option>
+                  <option value="Sports Medicine - ACL Injuries, Tennis Elbow, Concussions, Stress Fractures, Rotator Cuff Injuries">
+                    Sports Medicine - "ACL Injuries", "Tennis Elbow",
+                    "Concussions", "Stress Fractures", "Rotator Cuff Injuries"
+                  </option>
+                  <option value="Allergy and Immunology - Asthma, Food Allergies, Seasonal Allergies, Eczema, Anaphylaxis">
+                    Allergy and Immunology - "Asthma", "Food Allergies",
+                    "Seasonal Allergies", "Eczema", "Anaphylaxis"
+                  </option>
+                  <option value="Pain Management - Chronic Back Pain, Neuropathy, Fibromyalgia, Arthritis Pain, Cancer Pain">
+                    Pain Management - "Chronic Back Pain", "Neuropathy",
+                    "Fibromyalgia", "Arthritis Pain", "Cancer Pain"
+                  </option>
+                  <option value="Preventive Medicine - Vaccination, Smoking Cessation, Diabetes Prevention, Obesity Management, Blood Pressure Management">
+                    Preventive Medicine - "Vaccination", "Smoking Cessation",
+                    "Diabetes Prevention", "Obesity Management", "Blood Pressure
+                    Management"
+                  </option>
+                  <option value="Neurosurgery - Brain Tumors, Spinal Cord Injury, Aneurysms, Epilepsy Surgery, Chronic Pain Disorders">
+                    Neurosurgery - "Brain Tumors", "Spinal Cord Injury",
+                    "Aneurysms", "Epilepsy Surgery", "Chronic Pain Disorders"
+                  </option>
+                  <option value="Vascular Surgery - Aneurysm, Carotid Artery Disease, Peripheral Artery Disease, Varicose Veins, Deep Vein Thrombosis">
+                    Vascular Surgery - "Aneurysm", "Carotid Artery Disease",
+                    "Peripheral Artery Disease", "Varicose Veins", "Deep Vein
+                    Thrombosis"
+                  </option>
                 </select>
               </div>
               <div>
@@ -433,7 +520,7 @@ export default function Profile() {
                 <textarea
                   id="medicalHistory"
                   className="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  value={formData.medicalHistory || []}
+                  value={formData.medicalHistory || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -447,7 +534,7 @@ export default function Profile() {
                 <textarea
                   id="medications"
                   className="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  value={formData.medications || []}
+                  value={formData.medications || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -462,7 +549,7 @@ export default function Profile() {
                   type="text"
                   id="allergies"
                   className="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  value={formData.allergies || []}
+                  value={formData.allergies || ""}
                   onChange={handleChange}
                 />
               </div>
