@@ -64,6 +64,7 @@ exports.login = async (req, res) => {
   try {
     // Check if user exists
     const user = await User.findOne({ email });
+    console.log("67=--->", user)
     if (!user) {
       return res
         .status(400)
@@ -84,12 +85,16 @@ exports.login = async (req, res) => {
     );
 
     // Find the user in the specific collection (Doctor or Patient)
-    let findUser = null;
+    let findUser;
     if (user.accountType === "Doctor") {
       findUser = await Doctor.findOne({ user: user._id });
     } else if (user.accountType === "Patient") {
-      findUser = await Patient.findOne({ User: user._id });
+      console.log(user._id)
+      findUser = await Patient.findOne({ user: user._id });
+      console.log(findUser)
     }
+
+    console.log("95-->",findUser)
 
     res
       .cookie("access_token", token, { httpOnly: true })

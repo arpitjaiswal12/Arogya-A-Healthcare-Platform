@@ -1,6 +1,7 @@
 // Importing necessary modules and packages
 const express = require("express");
 const app = express();
+const authRoutes = require("./routes/auth.route.js");
 const userRoutes = require("./routes/users.route.js");
 
 const database = require("./config/database");
@@ -29,8 +30,8 @@ app.use(
 );
 
 // Setting up routes
-app.use("/api/v1/auth", userRoutes);
-// app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
 
 // Testing the server
 app.get("/", (req, res) => {
