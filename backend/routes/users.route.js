@@ -1,11 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { signup, login, logout } = require('../controllers/Auth.js');
-const { updateDoctorProfile } = require('../controllers/User.js');
+const {
+  updateDoctorProfile,
+  getAllDoctors,
+  getMedicines,
+  searchDoctors,
+} = require("../controllers/User.js");
 
-router.post('/signup', signup);
-router.post('/login', login);
-router.get('/logout', logout);
-router.post('/update-profile/:id', updateDoctorProfile);
+router.post("/update-profile/:id", updateDoctorProfile);
+router.get("/doctors", getAllDoctors);
+router.get("/medicines", getMedicines);
+router.get("/search-doctors", searchDoctors);
 
 module.exports = router;
