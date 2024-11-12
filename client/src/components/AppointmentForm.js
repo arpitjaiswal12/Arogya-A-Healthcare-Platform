@@ -18,7 +18,7 @@ const AppointmentForm = ({ doctor, user }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}api/payment/create-order`,
+        `${process.env.REACT_APP_PAYMENT_GATEWAY_LINK}api/payment/create-order`,
         {
           method: "POST",
           headers: {
@@ -103,7 +103,7 @@ const AppointmentForm = ({ doctor, user }) => {
               onClick={handlePayment}
               className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-semibold rounded-xl shadow-lg hover:from-green-600 hover:to-green-800 transition duration-300 transform hover:scale-105"
             >
-              Buy Ticket
+              Book Slot
             </button>
           </div>
         </div>
