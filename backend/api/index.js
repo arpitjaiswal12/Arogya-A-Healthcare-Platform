@@ -1,13 +1,20 @@
 // Importing necessary modules and packages
 const express = require("express");
 const app = express();
-const authRoutes = require("./routes/auth.route.js");
-const userRoutes = require("./routes/users.route.js");
+const authRoutes = require("../routes/auth.route.js");
+const userRoutes = require("../routes/users.route.js");
 
-const database = require("./config/database");
+const database = require("../config/database.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+
+app.use(
+	cors({
+		origin: "*",
+		credentials: true,
+	})
+);
 
 // Setting up port numbe
 const PORT = process.env.PORT || 4000;
@@ -19,15 +26,9 @@ dotenv.config();
 database.connect();
  
 // Middlewares
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
-);
 
 // Setting up routes
 app.use("/api/v1/auth", authRoutes);
