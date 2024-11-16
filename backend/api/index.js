@@ -36,10 +36,7 @@ app.use("/api/v1/user", userRoutes);
 
 // Testing the server
 app.get("/", (req, res) => {
-	return res.json({
-		success: true,
-		message: "Your server is up and running ...",
-	});
+	res.send("<h1> Arogya- A complete HealthCare Platform </h1>")
 });
 
 // Listening to the server
