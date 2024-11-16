@@ -35,7 +35,7 @@ export default function Header() {
       <div className="flex justify-between items-center max-w-6xl mx-auto px-2 py-2 h-14 sm:p-2">
         <Link to="/" className="flex items-center">
           {/* Logo Image */}
-          <img src={logo} alt="Logo" className="w-10 h-10 mr-2" />
+          <img src={logo || " "} alt="Logo" className="w-10 h-10 mr-2" />
           {/* Logo Text */}
           <h1 className="font-serif font-bold text-sm sm:text-2xl flex flex-wrap">
             <span className="text-green-800">Arogya</span>
@@ -66,7 +66,7 @@ export default function Header() {
                 {currentUser ? (
                   <img
                     className="rounded-full h-7 w-7 object-cover"
-                    src={currentUser.user.image}
+                    src={currentUser.user?.image || " "}
                     alt="profile"
                   />
                 ) : (
@@ -112,7 +112,7 @@ export default function Header() {
                     {currentUser ? (
                       <img
                         className="rounded-full h-7 w-7 object-cover mt-4"
-                        src={currentUser.user.image}
+                        src={currentUser.user?.image || " "}
                         alt="profile"
                       />
                     ) : (

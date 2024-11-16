@@ -37,20 +37,44 @@ export default function Profile() {
         dateOfBirth: currentUser?.user?.dateOfBirth,
         gender: currentUser?.user?.gender,
         bloodGroup: currentUser?.user?.bloodGroup,
-        availableTimeSlot: currentUser?.availableTimeSlot || "",
-        consultantFee: currentUser?.consultantFee || "",
-        specialization: currentUser?.specialization || "",
-        degrees: currentUser?.degrees || "",
-        experience: currentUser?.experience || "",
-        certification: currentUser?.certification || "",
+        availableDays: currentUser?.doctor?.availableDays || [],
+        timeSlot: currentUser?.doctor?.timeSlot || { start: "", end: "" },
+        consultantFee:
+          currentUser?.consultantFee ||
+          currentUser?.currentType?.consultantFee ||
+          "",
+        specialization:
+          currentUser?.specialization ||
+          currentUser?.currentType?.specialization ||
+          "",
+        degrees:
+          currentUser?.degrees || currentUser?.currentType?.degrees || "",
+        experience:
+          currentUser?.experience || currentUser?.currentType?.experience || "",
+        certification:
+          currentUser?.certification ||
+          currentUser?.currentType?.certification ||
+          "",
         allergies:
           currentUser?.currentType?.allergies || currentUser?.allergies || "",
         emergencyContact: currentUser?.currentType?.emergencyContact || "",
         medicalHistory: currentUser?.currentType?.medicalHistory || "",
         medications: currentUser?.currentType?.medications || "",
       });
+
+      if (currentUser?.user?.dateOfBirth) {
+        const formattedDate = new Date(currentUser?.user?.dateOfBirth)
+          .toISOString()
+          .split("T")[0];
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          dateOfBirth: formattedDate,
+        }));
+      }
     }
   }, [currentUser]);
+
+  console.log(currentUser?.user?.dateOfBirth);
 
   const handleToggle = () => {
     if (type === "password") {
@@ -580,7 +604,14 @@ export default function Profile() {
         </form>
 
         {/* Logout Button */}
-        <div className="flex justify-end mt-6">
+        <div className="flex justify-between mt-6">
+          <button
+            onClick={handleLogout}
+            className="text-red-600 font-medium hover:text-red-700"
+          >
+            Delete Account
+          </button>
+
           <button
             onClick={handleLogout}
             className="text-red-600 font-medium hover:text-red-700"
@@ -588,6 +619,8 @@ export default function Profile() {
             Sign out
           </button>
         </div>
+
+        <div className="flex justify-end mt-6"></div>
 
         {/* Error or Success Messages */}
         <p className="mt-3 text-red-600">{error ? error : ""}</p>
