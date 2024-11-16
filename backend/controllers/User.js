@@ -54,13 +54,21 @@ exports.updateDoctorProfile = async (req, res) => {
       await user.save();
 
       // Update doctor profile fields
-      if (consultantFee) doctorProfile.consultantFee = consultantFee;
-      if (specialization) doctorProfile.specialization = specialization;
+      if (consultantFee)
+        doctorProfile.consultantFee =
+          consultantFee || doctorProfile.consultantFee;
+      if (specialization)
+        doctorProfile.specialization =
+          specialization || doctorProfile.specialization;
       if (availableTimeSlot)
-        doctorProfile.availableTimeSlot = availableTimeSlot;
-      if (certification) doctorProfile.certification = certification;
-      if (degrees) doctorProfile.degrees = degrees;
-      if (experience) doctorProfile.experience = experience;
+        doctorProfile.availableTimeSlot =
+          availableTimeSlot || doctorProfile.availableTimeSlot;
+      if (certification)
+        doctorProfile.certification =
+          certification || doctorProfile.certification;
+      if (degrees) doctorProfile.degrees = degrees || doctorProfile.degrees;
+      if (experience)
+        doctorProfile.experience = experience || doctorProfile.experience;
       // doctorProfile.images = images;
 
       // Save the updated doctor profile
@@ -247,5 +255,42 @@ exports.searchDoctors = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.deleteDoctor = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log(req.params)
+
+    // Find and delete doctor
+    const deletedDoctor = await Doctor.deleteOne({ userId });
+    const deletedUser = await User.deleteOne({userId });
+
+    if (!deletedDoctor && !deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "Doctor deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+exports.deletePatient = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Find and delete patient
+    const deletedPatient = await Patient.findByIdAndDelete({user:userId});
+    const deletedUser = await User.findByIdAndDelete({_id:userId});
+
+    if (!deletedPatient || !deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "Patient deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
