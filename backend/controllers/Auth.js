@@ -11,8 +11,13 @@ const JWT_SECRET = process.env.JWT_SECRET; // Store in env file
 
 // Signup Controller
 exports.signup = async (req, res) => {
-  const { firstName, lastName, email, contactNumber, password, accountType } =
-    req.body;
+  const { firstName, lastName, email, contactNumber, password, accountType } = req.body;
+
+  // Email validation using regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.error(400, "Email address is not valid");
+  }
 
   try {
     // Check if user already exists
@@ -32,24 +37,23 @@ exports.signup = async (req, res) => {
       contactNumber,
       password: hashedPassword,
       accountType,
-      // No need to include dateOfBirth, gender, bloodGroup here
     });
 
-    if (accountType == "Doctor") {
+    if (accountType === "Doctor") {
       await newUser.save();
       if (!newUser._id) {
         res.status(500).json({ message: "Server error" });
       }
       const newDoctor = new Doctor({ user: newUser._id });
       await newDoctor.save();
-    } else if (accountType == "Patient") {
+    } else if (accountType === "Patient") {
       await newUser.save();
       if (!newUser._id) {
         res.status(500).json({ message: "Server error" });
       }
       const newPatient = new Patient({ user: newUser._id });
       await newPatient.save();
-    }
+    }x
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -61,14 +65,17 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
+  // Email validation using regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.error(400).json({ message: "Email address is not valid" });
+  }
+
   try {
     // Check if user exists
     const user = await User.findOne({ email });
-    console.log("67=--->", user)
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "Invalid credentials: User does not exist" });
+      return res.status(400).json({ message: "Invalid credentials: User does not exist" });
     }
 
     // Compare passwords
@@ -89,12 +96,8 @@ exports.login = async (req, res) => {
     if (user.accountType === "Doctor") {
       findUser = await Doctor.findOne({ user: user._id });
     } else if (user.accountType === "Patient") {
-      console.log(user._id)
       findUser = await Patient.findOne({ user: user._id });
-      console.log(findUser)
     }
-
-    console.log("95-->",findUser)
 
     res
       .cookie("access_token", token, { httpOnly: true })
