@@ -23,6 +23,7 @@ const DoctorList = () => {
 
         if (data.success) {
           setDoctors(data.doctors);
+          console.log(doctors)
         } else {
           toast.error(data.message || "Failed to fetch doctors");
         }
@@ -31,6 +32,7 @@ const DoctorList = () => {
         toast.error("Error fetching doctors. Please try again later.");
       }
     };
+    
 
     fetchDoctors();
   }, []);
@@ -82,11 +84,13 @@ const DoctorList = () => {
       toast.error("Error searching doctors. Please try again later.");
     }
   };
+  
 
   // Handle booking appointment
   const handleBookAppointment = async (doctor) => {
     if (currentUser) {
       setSelectedDoctor(doctor);
+      console.log(doctor.user.image)
     } else {
       toast.error("Please log in to book an appointment.");
       navigate("/login");
@@ -154,25 +158,25 @@ const DoctorList = () => {
                   <tr key={doctor._id}>
                     <td className="py-2 px-4 border-b-2">
                       <img
-                        src={doctor.user.image}
-                        alt={`${doctor.user.firstName} ${doctor.user.lastName}`}
+                        src={doctor.user?.image || ' '}
+                        alt={`${doctor.user?.firstName || ' '} ${doctor.user?.lastName || ' '}`}
                         className="w-10 h-10 rounded-full"
                       />
                     </td>
                     <td className="py-2 px-4 border-b-2">
-                      Dr. {doctor.user.firstName} {doctor.user.lastName}
+                      Dr. {doctor.user?.firstName || ' '} {doctor.user?.lastName || ' '}
                     </td>
                     <td className="py-2 px-4 border-b-2">
-                      {doctor.user.contactNumber}
+                      {doctor.user?.contactNumber || ' '}
                     </td>
                     <td className="py-2 px-4 border-b-2">
-                      {doctor.availableTimeSlot}
+                      {doctor?.availableTimeSlot || ' '}
                     </td>
                     <td className="py-2 px-4 border-b-2">
-                      ₹{doctor.consultantFee}
+                      ₹{doctor?.consultantFee || ' '}
                     </td>
                     <td className="py-2 px-4 border-b-2">
-                      {doctor.specialization}
+                      {doctor?.specialization || ' '}
                     </td>
                     <td className="py-2 px-4 border-b-2">
                       <button

@@ -4,16 +4,26 @@ import { v4 as uuidv4 } from "uuid"; // Import uuid library for unique IDs
 
 const AppointmentForm = ({ doctor, user }) => {
   const [description, setDescription] = useState("");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+
+  // Example list of available time slots
+  const availableTimeSlots = ["10:00 AM", "11:00 AM", "12:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"];
 
   const handlePayment = async () => {
+    if (!selectedTimeSlot) {
+      toast.error("Please select an available time slot.");
+      return;
+    }
+
     const transactionID = uuidv4(); // Generate unique transaction ID
 
     const paymentData = {
-      transactionID, // Pass transaction ID to payment data
+      transactionID,
       name: `${user.firstName} ${user.lastName}`,
       mobileNumber: user.contactNumber,
       amount: doctor.consultantFee,
       description,
+      timeSlot: selectedTimeSlot, // Include selected time slot
     };
 
     try {
@@ -78,6 +88,36 @@ const AppointmentForm = ({ doctor, user }) => {
                 <strong>Specialization:</strong> {doctor.specialization}
               </p>
             </div>
+            <input
+                type="date"
+                name="time"
+                className="form-input"
+                // value={formDetails.time}
+                // onChange={inputChange}
+              />
+          </div>
+
+          {/* Time Slot Selection */}
+          <div>
+            <label
+              htmlFor="timeSlot"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Select Available Time Slot
+            </label>
+            <select
+              id="timeSlot"
+              value={selectedTimeSlot}
+              onChange={(e) => setSelectedTimeSlot(e.target.value)}
+              className="w-full p-4 border border-gray-300 rounded-xl shadow-sm focus:ring-4 focus:ring-blue-300 transition"
+            >
+              <option value="">Select a time slot</option>
+              {availableTimeSlots.map((slot) => (
+                <option key={slot} value={slot}>
+                  {slot}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Description Box */}
@@ -97,7 +137,7 @@ const AppointmentForm = ({ doctor, user }) => {
             />
           </div>
 
-          {/* Buy Ticket Button */}
+          {/* Book Slot Button */}
           <div className="flex justify-center">
             <button
               onClick={handlePayment}
