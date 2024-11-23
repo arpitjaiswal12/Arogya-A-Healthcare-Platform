@@ -11,12 +11,13 @@ const JWT_SECRET = process.env.JWT_SECRET; // Store in env file
 
 // Signup Controller
 exports.signup = async (req, res) => {
-  const { firstName, lastName, email, contactNumber, password, accountType } = req.body;
+  const { firstName, lastName, email, contactNumber, password, accountType } =
+    req.body;
 
   // Email validation using regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return res.error(400, "Email address is not valid");
+    return res.status(400, "Email address is not valid", { success: false });
   }
 
   try {
@@ -53,7 +54,7 @@ exports.signup = async (req, res) => {
       }
       const newPatient = new Patient({ user: newUser._id });
       await newPatient.save();
-    }x
+    }
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -68,20 +69,29 @@ exports.login = async (req, res) => {
   // Email validation using regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    return res.error(400).json({ message: "Email address is not valid" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Email address is not valid" });
   }
 
   try {
     // Check if user exists
     const user = await User.findOne({ email });
+    console.log(user)
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials: User does not exist" });
+      return res.status(400).json({
+        success: false,
+        message: "Invalid credentials: User does not exist",
+      });
     }
-
+    console.log(user.password)
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch)
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     // Create a JWT token
@@ -123,7 +133,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 exports.logout = async (req, res) => {
   try {
