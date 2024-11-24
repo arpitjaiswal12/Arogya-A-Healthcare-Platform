@@ -46,6 +46,7 @@ export default function Login() {
 
     try {
       dispatch(loginStart());
+      console.log(formData)
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/auth/login`, {
         method: "POST",
         headers: {
@@ -54,13 +55,17 @@ export default function Login() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data)
+      
       if (data.success === false) {
+        toast.error(data.message);
         dispatch(loginFailure(data.message));
         return;
       }
       dispatch(loginSuccess(data));
       navigate("/");
     } catch (error) {
+      toast.error(error.message);
       dispatch(loginFailure(error.message));
     }
   };
@@ -103,7 +108,7 @@ export default function Login() {
           <span className="text-blue-700">Sign Up</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+      {/* {error && <p className="text-red-500 mt-5">{error}</p>} */}
     </div>
   );
 }

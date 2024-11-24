@@ -12,6 +12,8 @@ import {
 import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
+import PatientBookings from "../components/PatientBookings.js";
+import DoctorBookings from "../components/DoctorBookings.js";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -24,8 +26,8 @@ export default function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(currentUser);
     if (currentUser) {
+      console.log(formData);
       setFormData({
         firstName: currentUser?.user?.firstName,
         lastName: currentUser?.user?.lastName,
@@ -33,12 +35,12 @@ export default function Profile() {
         contactNumber: currentUser?.user?.contactNumber,
         image: currentUser?.user?.image,
         accountType: currentUser?.user?.accountType,
-        password: "",
         dateOfBirth: currentUser?.user?.dateOfBirth,
         gender: currentUser?.user?.gender,
         bloodGroup: currentUser?.user?.bloodGroup,
-        availableDays: currentUser?.doctor?.availableDays || [],
-        timeSlot: currentUser?.doctor?.timeSlot || { start: "", end: "" },
+        //Doctor
+        availableDays: currentUser?.currentType?.availableDays || [],
+        availableTimeSlot: currentUser?.currentType?.availableTimeSlot || { start: "", end: "" },
         consultantFee:
           currentUser?.consultantFee ||
           currentUser?.currentType?.consultantFee ||
@@ -55,11 +57,12 @@ export default function Profile() {
           currentUser?.certification ||
           currentUser?.currentType?.certification ||
           "",
+        //Patient
         allergies:
           currentUser?.currentType?.allergies || currentUser?.allergies || "",
-        emergencyContact: currentUser?.currentType?.emergencyContact || "",
-        medicalHistory: currentUser?.currentType?.medicalHistory || "",
-        medications: currentUser?.currentType?.medications || "",
+        emergencyContact: currentUser?.currentType?.emergencyContact || currentUser?.emergencyContact || "",
+        medicalHistory: currentUser?.currentType?.medicalHistory || currentUser?.medicalHistory || "",
+        medications: currentUser?.currentType?.medications || currentUser?.medications || "",
       });
 
       if (currentUser?.user?.dateOfBirth) {
@@ -92,8 +95,34 @@ export default function Profile() {
 
   console.log(formData);
 
+  const handleMultiSelectChange = (e) => {
+    const options = e.target.options;
+    const selectedDays = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedDays.push(options[i].value);
+      }
+    }
+    setFormData((prevData) => ({
+      ...prevData,
+      availableDays: selectedDays,
+    }));
+  };
+
+  const handleTimeSlotChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      timeSlot: {
+        ...prevData.timeSlot,
+        [id]: value,
+      },
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       dispatch(updateUserStart());
       const res = await fetch(
@@ -106,12 +135,14 @@ export default function Profile() {
           body: JSON.stringify(formData),
         }
       );
+      console.log(res);
       const data = await res.json();
+      console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
         return;
       }
-      console.log(data);
+      console.log(data.updatedUser);
       dispatch(updateUserSuccess(data.updatedUser));
       setUpdateSuccess(true);
     } catch (error) {
@@ -309,9 +340,10 @@ export default function Profile() {
           </div>
 
           {/* Conditional Doctor and Patient Fields */}
-          {currentUser && currentUser.user.accountType === "Doctor" && (
+          {(currentUser?.user?.accountType === "Doctor" ||
+            formData.accountType === "Doctor") && (
             <>
-              <div>
+              {/* <div>
                 <label
                   htmlFor="availableTimeSlot"
                   className="block text-sm font-medium text-gray-700"
@@ -325,10 +357,82 @@ export default function Profile() {
                   value={formData.availableTimeSlot}
                   onChange={handleChange}
                 />
+              </div> */}
+
+              {/* Available Days Section */}
+              <div>
+                <label
+                  htmlFor="availableDays"
+                  className="block text-lg font-medium text-gray-700 mb-2"
+                >
+                  Available Days
+                </label>
+                <select
+                  id="availableDays"
+                  multiple
+                  value={formData?.availableDays}
+                  onChange={handleMultiSelectChange}
+                  className="w-full h-36 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  {[
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                  ].map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
               </div>
+              {console.log("385--->", formData)}
+              {/* Display Selected Days */}
+              {formData?.availableDays?.length > 0 && (
+                <div className="bg-gray-100 p-4 rounded-md">
+                  <strong className="text-lg">Selected Available Days:</strong>
+                  <ul className="mt-2">
+                    {formData.availableDays.map((day) => (
+                      <li key={day} className="text-gray-800">
+                        {day}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Available Time Slot Section */}
               <div>
                 <label
                   htmlFor="availableTimeSlot"
+                  className="block text-lg font-medium text-gray-700 mb-2"
+                >
+                  Available Time Slot
+                </label>
+                <div className="flex space-x-4">
+                  <input
+                    type="time"
+                    id="start"
+                    value={formData?.availableTimeSlot?.start || ""}
+                    onChange={handleTimeSlotChange}
+                    className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                  <input
+                    type="time"
+                    id="end"
+                    value={formData?.availableTimeSlot?.end || ""}
+                    onChange={handleTimeSlotChange}
+                    className="w-1/2 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="consultfee"
                   className="block text-sm font-medium text-gray-700"
                 >
                   consultant Fee
@@ -532,7 +636,8 @@ export default function Profile() {
             </>
           )}
 
-          {currentUser && currentUser.user.accountType === "Patient" && (
+          {(currentUser?.user?.accountType === "Patient" ||
+            formData.accountType === "Patient") && (
             <>
               <div>
                 <label
@@ -600,7 +705,7 @@ export default function Profile() {
             className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-sm hover:bg-indigo-700 disabled:bg-gray-400"
           >
             {loading ? "Updating..." : "Update Profile"}
-          </button>
+          </button>          
         </form>
 
         {/* Logout Button */}
@@ -618,16 +723,20 @@ export default function Profile() {
           >
             Sign out
           </button>
-        </div>
 
-        <div className="flex justify-end mt-6"></div>
+          
+        </div>
 
         {/* Error or Success Messages */}
         <p className="mt-3 text-red-600">{error ? error : ""}</p>
         <p className="mt-3 text-green-600">
           {updateSuccess ? "User profile updated successfully!" : ""}
         </p>
+        {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
+          {currentUser?.user?.accountType === "Patient" && <PatientBookings />}
       </div>
+      {/* {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
+      {currentUser?.user?.accountType === "Patient" && <PatientBookings />} */}
     </div>
   );
 }
