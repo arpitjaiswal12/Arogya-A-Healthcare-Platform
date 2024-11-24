@@ -12,6 +12,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import OtpVerification from "./components/OtpVerification";
 import DoctorsTable from "./components/DoctorsTable.js";
 import DiseaseSearch from "./pages/DiseaseSearch.js";
+import PatientBookings from "./components/PatientBookings.js";
+import DoctorBookings from "./components/DoctorBookings.js";
 
 function App() {
   return (
