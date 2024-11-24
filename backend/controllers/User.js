@@ -124,12 +124,12 @@ exports.updateDoctorProfile = async (req, res) => {
       }
 
       const updatedUser = patientProfile;
-      console.log(user)
+      console.log(user);
 
       res.status(200).json({
         success: true,
         message: "Patient profile updated successfully.",
-        updatedUser
+        updatedUser,
       });
     }
   } catch (error) {
@@ -483,6 +483,7 @@ exports.getAppointmentsByPatient = async (req, res, next) => {
       select: "firstName lastName contactNumber gender accountType", // Only select specific fields from the user model
     },
   });
+  console.log(appointments);
 
   if (!appointments || appointments.length === 0) {
     return res
@@ -495,4 +496,30 @@ exports.getAppointmentsByPatient = async (req, res, next) => {
     results: appointments.length,
     data: appointments,
   });
+};
+
+exports.deleteAppointment = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    // Check if the appointment exists
+    const appointment = await Appointment.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    // Delete the appointment
+    await Appointment.findByIdAndDelete(id);
+
+    return res
+      .status(200)
+      .json({ message: "Appointment deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting appointment:", error);
+    return res
+      .status(500)
+      .json({
+        message: "An error occurred while deleting the appointment",
+        error,
+      });
+  }
 };
