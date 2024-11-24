@@ -66,7 +66,7 @@ export default function Header() {
                 {currentUser ? (
                   <img
                     className="rounded-full h-7 w-7 object-cover"
-                    src={currentUser.user?.image || " "}
+                    src={currentUser?.user?.image || " "}
                     alt="profile"
                   />
                 ) : (
@@ -112,7 +112,7 @@ export default function Header() {
                     {currentUser ? (
                       <img
                         className="rounded-full h-7 w-7 object-cover mt-4"
-                        src={currentUser.user?.image || " "}
+                        src={currentUser?.user?.image || " "}
                         alt="profile"
                       />
                     ) : (
