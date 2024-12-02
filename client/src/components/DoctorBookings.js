@@ -36,7 +36,7 @@ const DoctorBookings = ({ currentDoctor }) => {
   // Delete booking and mark as done
   const handleBookingAction = async (bookingId, action) => {
     try {
-      const response = await fetch(`http://localhost:8002/api/v1/doctor/bookings/${bookingId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/doctor/bookings/${bookingId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

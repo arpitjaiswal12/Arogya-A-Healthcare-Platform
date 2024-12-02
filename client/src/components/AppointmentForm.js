@@ -106,7 +106,7 @@ const AppointmentForm = ({ doctor, user }) => {
   const fetchBookedAppointments = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8002/api/v1/user/available-appointment/${doctor._id}`
+        `${process.env.REACT_APP_BACKEND_URL}api/v1/user/available-appointment/${doctor._id}`
       );
       const data = await response.json();
 
