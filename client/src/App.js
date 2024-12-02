@@ -14,12 +14,12 @@ import DoctorsTable from "./components/DoctorsTable.js";
 import DiseaseSearch from "./pages/DiseaseSearch.js";
 import PatientBookings from "./components/PatientBookings.js";
 import DoctorBookings from "./components/DoctorBookings.js";
+import Footer from "./components/Footer.js";
 
 function App() {
   return (
     <div className="w-full h-full bg-[#fdfdfb] flex flex-col">
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -27,10 +27,18 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/otp" element={<OtpVerification />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
         <Route path="/get-checkup-done" element={<DoctorsTable />} />
         <Route path="/search-disease" element={<DiseaseSearch />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }
