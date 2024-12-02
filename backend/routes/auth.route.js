@@ -7,6 +7,5 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.get('/logout', logout);
 router.post('/update-profile/:id', updateDoctorProfile);
-router.get('/doctors/', getAllDoctors);
 
 module.exports = router;
