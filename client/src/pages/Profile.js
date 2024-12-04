@@ -14,6 +14,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import PatientBookings from "../components/PatientBookings.js";
 import DoctorBookings from "../components/DoctorBookings.js";
+import toast from "react-hot-toast";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -21,7 +22,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [type, setType] = useState("password");
-  const [updateData,setUpdateData] =useState({});
+  const [updateData, setUpdateData] = useState({});
   const [icon, setIcon] = useState(eyeOff);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ export default function Profile() {
         bloodGroup: currentUser?.user?.bloodGroup,
         //Doctor
         availableDays: currentUser?.Profile?.availableDays || [],
-        availableTimeSlot: currentUser?.Profile?.availableTimeSlot || { start: "", end: "" },
+        availableTimeSlot: currentUser?.Profile?.availableTimeSlot || {
+          start: "",
+          end: "",
+        },
         consultantFee:
           currentUser?.consultantFee ||
           currentUser?.Profile?.consultantFee ||
@@ -50,8 +54,7 @@ export default function Profile() {
           currentUser?.specialization ||
           currentUser?.Profile?.specialization ||
           "",
-        degrees:
-          currentUser?.degrees || currentUser?.Profile?.degrees || "",
+        degrees: currentUser?.degrees || currentUser?.Profile?.degrees || "",
         experience:
           currentUser?.experience || currentUser?.Profile?.experience || "",
         certification:
@@ -61,9 +64,16 @@ export default function Profile() {
         //Patient
         allergies:
           currentUser?.Profile?.allergies || currentUser?.allergies || "",
-        emergencyContact: currentUser?.Profile?.emergencyContact || currentUser?.emergencyContact || "",
-        medicalHistory: currentUser?.Profile?.medicalHistory || currentUser?.medicalHistory || "",
-        medications: currentUser?.Profile?.medications || currentUser?.medications || "",
+        emergencyContact:
+          currentUser?.Profile?.emergencyContact ||
+          currentUser?.emergencyContact ||
+          "",
+        medicalHistory:
+          currentUser?.Profile?.medicalHistory ||
+          currentUser?.medicalHistory ||
+          "",
+        medications:
+          currentUser?.Profile?.medications || currentUser?.medications || "",
       });
 
       if (currentUser?.user?.dateOfBirth) {
@@ -140,12 +150,14 @@ export default function Profile() {
       console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
+        toast.error(data.message);
         return;
       }
       console.log(data);
-      setUpdateData(data.Profile)
+      setUpdateData(data.Profile);
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
+      toast.success("User profile updated successfully!");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
     }
@@ -706,7 +718,7 @@ export default function Profile() {
             className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-sm hover:bg-indigo-700 disabled:bg-gray-400"
           >
             {loading ? "Updating..." : "Update Profile"}
-          </button>          
+          </button>
         </form>
 
         {/* Logout Button */}
@@ -724,24 +736,13 @@ export default function Profile() {
           >
             Sign out
           </button>
-
-          
         </div>
-
-        {/* Error or Success Messages */}
-        <p className="mt-3 text-red-600">{error ? error : ""}</p>
-        <p className="mt-3 text-green-600">
-          {updateSuccess ? "User profile updated successfully!" : ""}
-        </p>
 
         <div>
-        {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
-        {currentUser?.user?.accountType === "Patient" && <PatientBookings />}
+          {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
+          {currentUser?.user?.accountType === "Patient" && <PatientBookings />}
         </div>
-        
       </div>
-      {/* {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
-      {currentUser?.user?.accountType === "Patient" && <PatientBookings />} */}
     </div>
   );
 }

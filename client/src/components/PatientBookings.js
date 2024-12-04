@@ -9,14 +9,14 @@ const PatientBookings = () => {
   const [loading, setLoading] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser.user.id)
+  console.log(currentUser.user.id || currentUser.user._id)
 
   // Fetch bookings on button click
   const fetchBookings = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}api/v1/user/patients-bookings/${currentUser.user.id}`
+        `${process.env.REACT_APP_BACKEND_URL}api/v1/user/patients-bookings/${currentUser.user.id || currentUser.user._id}`
       );
       const data = await response.json();
       console.log(data)

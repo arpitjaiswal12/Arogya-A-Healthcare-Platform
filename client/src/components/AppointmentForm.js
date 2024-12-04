@@ -12,11 +12,11 @@ const AppointmentForm = ({ doctor, user }) => {
 
   // const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
 
-  console.log(doctor._id);
+  // console.log(doctor._id);
 
-  console.log(slotDate);
+  // console.log(slotDate);
 
-  console.log(user.id);
+  // console.log(user.id);
 
   // Example list of available time slots
 
@@ -53,8 +53,6 @@ const AppointmentForm = ({ doctor, user }) => {
           body: JSON.stringify(appointmentData),
         }
       );
-
-      console.log()
 
       // Handle appointment booking response
       if (!appointmentResponse.ok) {
@@ -168,7 +166,7 @@ const AppointmentForm = ({ doctor, user }) => {
                 >
                   <strong>Available Time Slot </strong>
                 </label>
-                {console.log(doctor?.availableTimeSlot)}
+                {/* {console.log(doctor?.availableTimeSlot)} */}
                 <div className="flex space-x-4">
                   <input
                     type="time"
