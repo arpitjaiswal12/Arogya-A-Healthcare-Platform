@@ -31,8 +31,17 @@ function App() {
           <Route
             path="/profile"
             element={
-            
+              <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/get-checkup-done"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
             }
           />
           <Route path="/get-checkup-done" element={<DoctorsTable />} />
