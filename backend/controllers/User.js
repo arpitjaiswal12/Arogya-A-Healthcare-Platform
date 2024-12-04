@@ -25,20 +25,20 @@ exports.updateDoctorProfile = async (req, res) => {
       //   certification,
       // } = req.body;
 
-      const doctorProfile = await Doctor.findOneAndUpdate(
+      const Profile = await Doctor.findOneAndUpdate(
         { user: userId },
         req.body,
         { new: true }
       ).populate("user");
       //await Doctor.findById(userId).populate("user");
-      if (!doctorProfile) {
+      if (!Profile) {
         return res.status(404).json({
           success: false,
           message: "Doctor profile not found.",
         });
       }
 
-      console.log("--------> ", doctorProfile);
+      console.log("--------> ", Profile);
 
       // Update the User details (firstName, lastName, email, contactNumber)
       const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
@@ -63,54 +63,55 @@ exports.updateDoctorProfile = async (req, res) => {
 
       // // Update doctor profile fields
       // if (consultantFee)
-      //   doctorProfile.consultantFee =
-      //     consultantFee || doctorProfile.consultantFee;
+      //   Profile.consultantFee =
+      //     consultantFee || Profile.consultantFee;
       // if (specialization)
-      //   doctorProfile.specialization =
-      //     specialization || doctorProfile.specialization;
+      //   Profile.specialization =
+      //     specialization || Profile.specialization;
       // // if (availableTimeSlot)
-      // //   doctorProfile.availableTimeSlot =
-      // //     availableTimeSlot || doctorProfile.availableTimeSlot;
+      // //   Profile.availableTimeSlot =
+      // //     availableTimeSlot || Profile.availableTimeSlot;
       // if (certification)
-      //   doctorProfile.certification =
-      //     certification || doctorProfile.certification;
-      // if (degrees) doctorProfile.degrees = degrees || doctorProfile.degrees;
+      //   Profile.certification =
+      //     certification || Profile.certification;
+      // if (degrees) Profile.degrees = degrees || Profile.degrees;
       // if (experience)
-      //   doctorProfile.experience = experience || doctorProfile.experience;
-      // if (timeSlot) doctorProfile.timeSlot = timeSlot || doctorProfile.timeSlot;
+      //   Profile.experience = experience || Profile.experience;
+      // if (timeSlot) Profile.timeSlot = timeSlot || Profile.timeSlot;
       // if (availableDays)
-      //   doctorProfile.availableDays =
-      //     availableDays || doctorProfile.availableDays;
-      // // doctorProfile.images = images;
+      //   Profile.availableDays =
+      //     availableDays || Profile.availableDays;
+      // // Profile.images = images;
 
-      // console.log("79===>", doctorProfile.timeSlot);
+      // console.log("79===>", Profile.timeSlot);
       // console.log("850=>>", availableDays);
 
       // // Save the updated doctor profile
-      // await doctorProfile.save();
+      // await Profile.save();
 
-      // const updatedUser = doctorProfile;
+      // const updatedUser = Profile;
 
       res.status(200).json({
         success: true,
         message: "Doctor profile updated successfully.",
-        doctorProfile,
+        Profile,
+        user
       });
     } else if (accountType == "Patient") {
-      const patientProfile = await Patient.findOneAndUpdate(
+      const Profile = await Patient.findOneAndUpdate(
         { user: userId },
         req.body,
         { new: true }
       );
       //await Doctor.findById(userId).populate("user");
-      if (!patientProfile) {
+      if (!Profile) {
         return res.status(404).json({
           success: false,
           message: "Doctor profile not found.",
         });
       }
 
-      console.log("--------> ", patientProfile);
+      console.log("--------> ", Profile);
 
       // Update the User details (firstName, lastName, email, contactNumber)
       const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
@@ -122,14 +123,13 @@ exports.updateDoctorProfile = async (req, res) => {
           message: "User associated with this doctor profile not found.",
         });
       }
-
-      const updatedUser = patientProfile;
       console.log(user);
 
       res.status(200).json({
         success: true,
         message: "Patient profile updated successfully.",
-        updatedUser,
+        Profile,
+        user,
       });
     }
   } catch (error) {
@@ -515,11 +515,9 @@ exports.deleteAppointment = async (req, res, next) => {
       .json({ message: "Appointment deleted successfully" });
   } catch (error) {
     console.error("Error deleting appointment:", error);
-    return res
-      .status(500)
-      .json({
-        message: "An error occurred while deleting the appointment",
-        error,
-      });
+    return res.status(500).json({
+      message: "An error occurred while deleting the appointment",
+      error,
+    });
   }
 };
