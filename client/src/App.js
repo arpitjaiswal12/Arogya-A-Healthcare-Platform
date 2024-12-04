@@ -18,27 +18,28 @@ import Footer from "./components/Footer.js";
 
 function App() {
   return (
-    <div className="w-full h-full bg-[#fdfdfb] flex flex-col">
+    <div className="flex flex-col min-h-screen bg-[#fdfdfb]">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/otp" element={<OtpVerification />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/get-checkup-done" element={<DoctorsTable />} />
-        <Route path="/search-disease" element={<DiseaseSearch />} />
-      </Routes>
-      <Footer/>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/otp" element={<OtpVerification />} />
+          <Route
+            path="/profile"
+            element={
+            
+                <Profile />
+            }
+          />
+          <Route path="/get-checkup-done" element={<DoctorsTable />} />
+          <Route path="/search-disease" element={<DiseaseSearch />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

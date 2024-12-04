@@ -8,13 +8,29 @@ body {
 } */
 
 .react-tel-input .form-control {
-    @apply !w-full py-6 !text-base;
-  }
-  
-  .opt-container {
-    @apply flex justify-between gap-2;
-  }
-  .opt-container input {
-    @apply !mr-0 flex-1 py-5 outline-none;
-  }
+  @apply !w-full py-6 !text-base;
+}
 
+.opt-container {
+  @apply flex justify-between gap-2;
+}
+.opt-container input {
+  @apply !mr-0 flex-1 py-5 outline-none;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+}
