@@ -12,23 +12,34 @@ import PrivateRoute from "./components/PrivateRoute";
 import OtpVerification from "./components/OtpVerification";
 import DoctorsTable from "./components/DoctorsTable.js";
 import DiseaseSearch from "./pages/DiseaseSearch.js";
+import PatientBookings from "./components/PatientBookings.js";
+import DoctorBookings from "./components/DoctorBookings.js";
+import Footer from "./components/Footer.js";
 
 function App() {
   return (
-    <div className="w-full h-full bg-[#fdfdfb] flex flex-col">
+    <div className="flex flex-col min-h-screen bg-[#fdfdfb]">
       <Navbar />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/otp" element={<OtpVerification />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/get-checkup-done" element={<DoctorsTable />} />
-        <Route path="/search-disease" element={<DiseaseSearch />} />
-      </Routes>
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/otp" element={<OtpVerification />} />
+          <Route
+            path="/profile"
+            element={
+            
+                <Profile />
+            }
+          />
+          <Route path="/get-checkup-done" element={<DoctorsTable />} />
+          <Route path="/search-disease" element={<DiseaseSearch />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

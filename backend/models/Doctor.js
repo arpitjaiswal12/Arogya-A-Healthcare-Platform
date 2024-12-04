@@ -18,10 +18,10 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    availableTimeSlot: {
-      type: String,
-      trim: true,
-    },
+    // availableTimeSlot: {
+    //   type: String,
+    //   trim: true,
+    // },
 
     certification: {
       type: String,
@@ -37,6 +37,23 @@ const doctorSchema = new mongoose.Schema(
       type: Number,
      // Experience in years
     },
+
+    availableDays: {
+      type: [String],
+      enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      // required: true
+    },
+    availableTimeSlot: {
+      start: {
+        type: String,
+        // required: true, // Format: 'HH:MM'
+      },
+      end: {
+        type: String,
+        // required: true, // Format: 'HH:MM'
+      }
+    }
+
   },
   { timestamps: true }
 );

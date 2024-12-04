@@ -31,8 +31,8 @@ const DoctorList = () => {
         console.error("Error fetching doctors:", error);
         toast.error("Error fetching doctors. Please try again later.");
       }
+      console.log(doctors) 
     };
-    
 
     fetchDoctors();
   }, []);
@@ -99,101 +99,89 @@ const DoctorList = () => {
 
   return (
     <div className="justify-center flex-col">
+  {/* Search Filters */}
+  {selectedDoctor ? (
+    <AppointmentForm doctor={selectedDoctor} user={currentUser.user} />
+  ) : (
+    <div className="m-5">
+      <div className="text-center mb-4">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Doctor List</h1>
+      </div>
+
       {/* Search Filters */}
-      {selectedDoctor ? (
-        <AppointmentForm doctor={selectedDoctor} user={currentUser.user} />
-      ) : (
-        <div className="m-5">
-          <div className="text-center mb-4">
-            <h1 className="text-2xl  font-bold mb-4">Doctor List</h1>
-          </div>
+      <div className="flex justify-center items-center mb-4 space-x-4">
+        <input
+          type="text"
+          placeholder="Search by Name"
+          className="border px-6 py-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Search by Specialization"
+          className="border px-6 py-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all"
+          value={searchSpecialization}
+          onChange={(e) => setSearchSpecialization(e.target.value)}
+        />
+        <button
+          onClick={searchDoctors}
+          className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-full shadow-md hover:from-green-600 hover:to-teal-600 transition-all ease-in-out duration-200"
+        >
+          Search
+        </button>
+      </div>
 
-          {/* Search Filters */}
-          <div className="flex justify-center items-center mb-4 space-x-4">
-            <input
-              type="text"
-              placeholder="Search by Name"
-              className="border px-4 py-2 rounded mr-4"
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Search by Specialization"
-              className="border px-4 py-2 rounded"
-              value={searchSpecialization}
-              onChange={(e) => setSearchSpecialization(e.target.value)}
-            />
-            <button
-              onClick={searchDoctors}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800 ml-4"
-            >
-              Search
-            </button>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b-2 text-left">Profile</th>
-                  <th className=" w-40  py-2 px-4 border-b-2 text-left">Doctor Name</th>
-                  <th className="py-2 px-4 border-b-2 text-left">
-                    Contact Number
-                  </th>
-                  <th className=" w-40 py-2 px-4 border-b-2 text-left">
-                    Available Slot
-                  </th>
-                  <th className="py-2 px-4 border-b-2 text-left">
-                    Consultant Fee
-                  </th>
-                  <th className=" w-60 py-2 px-4 border-b-2 text-left">
-                    Specialization
-                  </th>
-                  <th className="py-2 px-4 border-b-2"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {doctors.map((doctor) => (
-                  <tr key={doctor._id}>
-                    <td className="py-2 px-4 border-b-2">
-                      <img
-                        src={doctor.user?.image || ' '}
-                        alt={`${doctor.user?.firstName || ' '} ${doctor.user?.lastName || ' '}`}
-                        className="w-10 h-10 rounded-full"
-                      />
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      Dr. {doctor.user?.firstName || ' '} {doctor.user?.lastName || ' '}
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      {doctor.user?.contactNumber || ' '}
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      {doctor?.availableTimeSlot || ' '}
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      ₹{doctor?.consultantFee || ' '}
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      {doctor?.specialization || ' '}
-                    </td>
-                    <td className="py-2 px-4 border-b-2">
-                      <button
-                        onClick={() => handleBookAppointment(doctor)}
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-800"
-                      >
-                        Book Appointment
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      <div className="overflow-x-auto mt-10">
+        <table className="min-w-full bg-white shadow-md rounded-lg">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800">Profile</th>
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800 w-40">Doctor Name</th>
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800">Contact Number</th>
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800 w-40">Available Slot</th>
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800">Consultant Fee</th>
+              <th className="py-3 px-4 border-b-2 text-left text-sm font-semibold text-gray-800 w-60">Specialization</th>
+              <th className="py-3 px-4 border-b-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {doctors.map((doctor, index) => (
+              <tr
+                key={doctor._id}
+                className={`border-b ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200 transition-all duration-200`}
+              >
+                <td className="py-3 px-4">
+                  <img
+                    src={doctor.user?.image || ' '}
+                    alt={`${doctor.user?.firstName || ' '} ${doctor.user?.lastName || ' '}`}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                </td>
+                <td className="py-3 px-4 text-sm font-medium text-gray-700">
+                  Dr. {doctor.user?.firstName || ' '} {doctor.user?.lastName || ' '}
+                </td>
+                <td className="py-3 px-4 text-sm text-gray-800">{doctor?.user?.contactNumber || ' '}</td>
+                <td className="py-3 px-4 text-sm text-gray-800">{doctor?.availableTimeSlot?.start || ' '} - {doctor?.availableTimeSlot?.end || ' '}</td>
+                <td className="py-3 px-4 text-sm text-gray-800">₹{doctor?.consultantFee || ' '}</td>
+                <td className="py-3 px-4 text-sm text-gray-800">{doctor?.specialization || ' '}</td>
+                <td className="py-3 px-4 text-sm text-center">
+                  <button
+                    onClick={() => handleBookAppointment(doctor)}
+                    className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-full shadow-md hover:from-green-600 hover:to-teal-600 transition-all ease-in-out duration-200"
+                  >
+                    Book Appointment
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
+  )}
+</div>
+
   );
 };
 
