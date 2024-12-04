@@ -126,7 +126,7 @@ exports.login = async (req, res) => {
           gender: user.gender,
           bloodGroup: user.bloodGroup,
         },
-        currentType: findUser,
+        Profile: findUser,
       });
   } catch (error) {
     console.error(error);

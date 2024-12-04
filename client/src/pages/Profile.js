@@ -21,6 +21,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [type, setType] = useState("password");
+  const [updateData,setUpdateData] =useState({});
   const [icon, setIcon] = useState(eyeOff);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,30 +40,30 @@ export default function Profile() {
         gender: currentUser?.user?.gender,
         bloodGroup: currentUser?.user?.bloodGroup,
         //Doctor
-        availableDays: currentUser?.currentType?.availableDays || [],
-        availableTimeSlot: currentUser?.currentType?.availableTimeSlot || { start: "", end: "" },
+        availableDays: currentUser?.Profile?.availableDays || [],
+        availableTimeSlot: currentUser?.Profile?.availableTimeSlot || { start: "", end: "" },
         consultantFee:
           currentUser?.consultantFee ||
-          currentUser?.currentType?.consultantFee ||
+          currentUser?.Profile?.consultantFee ||
           "",
         specialization:
           currentUser?.specialization ||
-          currentUser?.currentType?.specialization ||
+          currentUser?.Profile?.specialization ||
           "",
         degrees:
-          currentUser?.degrees || currentUser?.currentType?.degrees || "",
+          currentUser?.degrees || currentUser?.Profile?.degrees || "",
         experience:
-          currentUser?.experience || currentUser?.currentType?.experience || "",
+          currentUser?.experience || currentUser?.Profile?.experience || "",
         certification:
           currentUser?.certification ||
-          currentUser?.currentType?.certification ||
+          currentUser?.Profile?.certification ||
           "",
         //Patient
         allergies:
-          currentUser?.currentType?.allergies || currentUser?.allergies || "",
-        emergencyContact: currentUser?.currentType?.emergencyContact || currentUser?.emergencyContact || "",
-        medicalHistory: currentUser?.currentType?.medicalHistory || currentUser?.medicalHistory || "",
-        medications: currentUser?.currentType?.medications || currentUser?.medications || "",
+          currentUser?.Profile?.allergies || currentUser?.allergies || "",
+        emergencyContact: currentUser?.Profile?.emergencyContact || currentUser?.emergencyContact || "",
+        medicalHistory: currentUser?.Profile?.medicalHistory || currentUser?.medicalHistory || "",
+        medications: currentUser?.Profile?.medications || currentUser?.medications || "",
       });
 
       if (currentUser?.user?.dateOfBirth) {
@@ -77,7 +78,7 @@ export default function Profile() {
     }
   }, [currentUser]);
 
-  console.log(currentUser?.user?.dateOfBirth);
+  console.log(currentUser);
 
   const handleToggle = () => {
     if (type === "password") {
@@ -113,8 +114,8 @@ export default function Profile() {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      timeSlot: {
-        ...prevData.timeSlot,
+      availableTimeSlot: {
+        ...prevData.availableTimeSlot,
         [id]: value,
       },
     }));
@@ -135,15 +136,15 @@ export default function Profile() {
           body: JSON.stringify(formData),
         }
       );
-      console.log(res);
       const data = await res.json();
       console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
         return;
       }
-      console.log(data.updatedUser);
-      dispatch(updateUserSuccess(data.updatedUser));
+      console.log(data);
+      setUpdateData(data.Profile)
+      dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -732,8 +733,12 @@ export default function Profile() {
         <p className="mt-3 text-green-600">
           {updateSuccess ? "User profile updated successfully!" : ""}
         </p>
+
+        <div>
         {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
-          {currentUser?.user?.accountType === "Patient" && <PatientBookings />}
+        {currentUser?.user?.accountType === "Patient" && <PatientBookings />}
+        </div>
+        
       </div>
       {/* {currentUser?.user?.accountType === "Doctor" && <DoctorBookings />}
       {currentUser?.user?.accountType === "Patient" && <PatientBookings />} */}
