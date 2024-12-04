@@ -31,8 +31,8 @@ const DoctorList = () => {
         console.error("Error fetching doctors:", error);
         toast.error("Error fetching doctors. Please try again later.");
       }
+      console.log(doctors) 
     };
-    
 
     fetchDoctors();
   }, []);

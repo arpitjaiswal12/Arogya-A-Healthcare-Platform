@@ -8,13 +8,13 @@ const DoctorBookings = ({ currentDoctor }) => {
   
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log(currentUser.currentType._id)
+  console.log(currentUser.Profile._id)
 
   // Fetch bookings for the doctor
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/user/doctors-bookings/${currentUser.currentType._id}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/v1/user/doctors-bookings/${currentUser.Profile._id}`);
       const data = await response.json();
       console.log(data)
 

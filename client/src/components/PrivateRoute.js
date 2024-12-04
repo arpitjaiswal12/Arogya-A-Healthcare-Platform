@@ -7,6 +7,9 @@ const PrivateRoute = ({isLoggedIn, children}) => {
   if(!currentUser){
     return <Navigate to="/login"/>
   }
+  else{
+    return <Navigate to="/profile"/>
+  }
 }
 
 export default PrivateRoute
