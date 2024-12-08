@@ -167,14 +167,21 @@ const DoctorList = () => {
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-gray-200 transition-all duration-200`}
                   >
-                    <td className="py-3 px-4">
-                      <img
-                        src={doctor.user?.image || ""}
-                        alt={`${doctor.user?.firstName || ""} ${
-                          doctor.user?.lastName || ""
-                        }`}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
+                    <td className="py-3 px-4 relative">
+                      <div className="relative w-12 h-12">
+                        {/* Overlay for Experience */}
+                        <div className="absolute top-0 right-0 bg-red-400 text-xs text-neutral-900 font-bold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
+                          {doctor.experience || 0}
+                        </div>
+                        {/* Profile Image */}
+                        <img
+                          src={doctor.user?.image || ""}
+                          alt={`${doctor.user?.firstName || ""} ${
+                            doctor.user?.lastName || ""
+                          }`}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      </div>
                     </td>
                     <td className="py-3 px-4 text-sm font-medium text-gray-700">
                       Dr. {doctor.user?.firstName || ""}{" "}
@@ -214,19 +221,26 @@ const DoctorList = () => {
                   className="bg-white shadow-md rounded-lg p-4 space-y-2"
                 >
                   <div className="flex items-center space-x-4">
-                    <img
-                      src={doctor.user?.image || ""}
-                      alt={`${doctor.user?.firstName || ""} ${
-                        doctor.user?.lastName || ""
-                      }`}
-                      className="w-16 h-16 rounded-full object-cover"
-                    />
+                    <div className="relative w-24 h-14">
+                      {/* Experience Badge */}
+                      <div className="absolute top-0 left-0 bg-red-400 text-neutral-900 text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
+                        {doctor.experience || 0}
+                      </div>
+                      {/* Profile Image */}
+                      <img
+                        src={doctor.user?.image || ""}
+                        alt={`${doctor.user?.firstName || ""} ${
+                          doctor.user?.lastName || ""
+                        }`}
+                        className="w-24 h-14 rounded-full object-cover"
+                      />
+                    </div>
                     <div>
                       <h2 className="font-semibold text-lg text-gray-800">
                         Dr. {doctor.user?.firstName || ""}{" "}
                         {doctor.user?.lastName || ""}
                       </h2>
-                      <p className=" text-base text-gray-600">
+                      <p className="text-base text-gray-600">
                         {doctor?.specialization || ""}
                       </p>
                     </div>
