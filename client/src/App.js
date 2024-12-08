@@ -36,14 +36,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/get-checkup-done"
             element={
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route path="/get-checkup-done" element={<DoctorsTable />} />
           <Route path="/search-disease" element={<DiseaseSearch />} />
         </Routes>
