@@ -36,8 +36,6 @@ function App() {
               </PrivateRoute>
             }
           />
-<<<<<<< HEAD
-=======
           {/* <Route
             path="/get-checkup-done"
             element={
@@ -46,7 +44,6 @@ function App() {
               </PrivateRoute>
             }
           /> */}
->>>>>>> version1.0.1
           <Route path="/get-checkup-done" element={<DoctorsTable />} />
           <Route path="/search-disease" element={<DiseaseSearch />} />
         </Routes>
