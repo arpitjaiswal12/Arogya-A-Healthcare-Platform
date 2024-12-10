@@ -121,7 +121,7 @@ const AppointmentForm = ({ doctor, user }) => {
 
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-[url('https://img.freepik.com/free-photo/copy-space-agenda-pills_23-2148550998.jpg?t=st=1731239917~exp=1731243517~hmac=ca9d4e21c9d47c8fa5883f6edd256cad701f61103d38b41da0a3300c5d097fa1&w=1380')] flex items-center justify-center">
-      <div className="max-w-xl mx-auto p-8 mt-5 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl">
+      <div className="max-w-xl p-8 m-5 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
           Appointment Form
         </h1>
@@ -274,36 +274,44 @@ const AppointmentForm = ({ doctor, user }) => {
         </div>
       </div>
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-xl font-semibold mb-4">Booked Appointments</h2>
-            {bookedSlots ? (
-              Object.entries(bookedSlots).map(([date, details]) => (
-                <div key={date} className="mb-4">
-                  <h3 className="font-medium">
-                    {date} ({details.day})
-                  </h3>
-                  <ul className="list-disc list-inside">
-                    {details.timeSlots.map((slot, index) => (
-                      <li key={index}>
-                        {slot.start} - {slot.end}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p>No bookings available.</p>
-            )}
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg"
-            >
-              Close
-            </button>
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg max-w-lg w-full mx-4 sm:mx-0">
+      {/* Modal Header */}
+      <h2 className="text-lg sm:text-xl font-semibold mb-4 text-center sm:text-left">
+        Booked Appointments
+      </h2>
+      
+      {/* Booked Slots */}
+      {bookedSlots ? (
+        Object.entries(bookedSlots).map(([date, details]) => (
+          <div key={date} className="mb-4">
+            <h3 className="font-medium text-center sm:text-left">
+              {date} ({details.day})
+            </h3>
+            <ul className="list-disc list-inside text-sm sm:text-base">
+              {details.timeSlots.map((slot, index) => (
+                <li key={index} className="text-center sm:text-left">
+                  {slot.start} - {slot.end}
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
+        ))
+      ) : (
+        <p className="text-center sm:text-left">No bookings available.</p>
       )}
+      
+      {/* Close Button */}
+      <button
+        onClick={() => setShowModal(false)}
+        className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg w-full sm:w-auto"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
