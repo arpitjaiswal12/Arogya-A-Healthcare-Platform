@@ -13,22 +13,64 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-[900px] mt-10">
+        <div className="hidden md:block">
+          <img src={bg} alt="Background" className="w-full h-auto" />
+          <div className="absolute top-1/3 -translate-y-1/2 left-1/2 transform -translate-x-1/2 text-center">
+            <h1 className="text-black font-serif font-bold text-3xl md:text-4xl">
+              Unlock the Power of Telemedicine Wisdom
+            </h1>
+            <h1 className="text-black font-bold text-lg md:text-xl">
+              Your Personalized Ayurvedic Healthcare Companion
+            </h1>
+            <div className="flex flex-col md:flex-row justify-center space-x-0 md:space-x-4 mt-4">
+              <Link to="/search-disease">
+                <button className="bg-richblack-800  text-white py-2 px-4 rounded border border-richblack-700">
+                  Browse Herbs
+                </button>
+              </Link>
+              <Link to="/get-checkup-done">
+                <button className="bg-richblack-800  text-white py-2 px-4 rounded border border-richblack-700">
+                  Get Your Checkup Done
+                </button>
+              </Link>
+              {currentUser && (
+                <Link
+                  to="https://sfu.mirotalk.com/join/70797BrownGhost"
+                  target="_blank"
+                >
+                  <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
+                    Create Meeting
+                  </button>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="block md:hidden relative w-full max-w-[900px] mx-auto">
+        {/* Background Image */}
         <img src={bg} alt="Background" className="w-full h-auto" />
-        <div className="absolute top-1/3 -translate-y-1/2 left-1/2 transform -translate-x-1/2 text-center">
-          <h1 className="text-black font-serif font-bold text-3xl md:text-4xl">
+
+        {/* Overlay Content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center space-y-4">
+          {/* Main Heading */}
+          <h1 className="text-black font-serif font-bold text-2xl md:text-4xl leading-snug">
             Unlock the Power of Telemedicine Wisdom
           </h1>
-          <h1 className="text-black font-bold text-lg md:text-xl">
+          {/* Subheading */}
+          <h1 className="text-black font-bold text-base md:text-xl leading-relaxed">
             Your Personalized Ayurvedic Healthcare Companion
           </h1>
-          <div className="flex flex-col md:flex-row justify-center space-x-0 md:space-x-4 mt-4">
+          {/* Buttons */}
+          <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-3 md:space-y-0 mt-4">
             <Link to="/search-disease">
-              <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
+              <button className="bg-richblack-800 opacity-80 font-semibold text-white py-2 px-4 rounded border border-richblack-700 hover:bg-richblack-700 transition duration-200">
                 Browse Herbs
               </button>
             </Link>
             <Link to="/get-checkup-done">
-              <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
+              <button className="bg-richblack-800 opacity-80 font-semibold text-white py-2 px-4 rounded border border-richblack-700 hover:bg-richblack-700 transition duration-200">
                 Get Your Checkup Done
               </button>
             </Link>
@@ -37,7 +79,7 @@ const Home = () => {
                 to="https://sfu.mirotalk.com/join/70797BrownGhost"
                 target="_blank"
               >
-                <button className="bg-richblack-800 text-white py-2 px-4 rounded border border-richblack-700">
+                <button className="bg-richblack-800 opacity-80 font-semibold text-white py-2 px-4 rounded border border-richblack-700 hover:bg-richblack-700 transition duration-200">
                   Create Meeting
                 </button>
               </Link>

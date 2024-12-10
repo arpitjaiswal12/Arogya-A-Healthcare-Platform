@@ -9,8 +9,8 @@ export default function Footer() {
             {/* Logo Image */}
           <img src={logo || " "} alt="Logo" className="w-10 h-10 mr-2" />
           {/* Logo Text */}
-          <h1 className="font-serif font-bold text-sm sm:text-2xl flex flex-wrap">
-            <span className="text-green-800">Arogya</span>
+          <h1 className="font-serif font-bold text-xl sm:text-2xl flex flex-wrap">
+            <span className="bg-gradient-to-r from-green-800 to-lime-600 bg-clip-text text-transparent">Arogya</span>
           </h1>
           </div>
 
