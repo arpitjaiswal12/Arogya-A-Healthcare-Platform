@@ -1,10 +1,10 @@
-# SehatSathi 🏥
+# Arogya 🏥
 
-SehatSathi connects India's underserved communities to essential medical services, focusing on the last mile.
+Arogya connects India's underserved communities to essential medical services, focusing on the last mile.
 
 ## About ℹ️
 
-SehatSathi aims to bridge healthcare gaps in remote Indian communities. By leveraging technology, we make healthcare accessible, affordable, and convenient for all.
+Arogya aims to bridge healthcare gaps in remote Indian communities. By leveraging technology, we make healthcare accessible, affordable, and convenient for all.
 
 ## Current Problems ⚠️
 
@@ -15,7 +15,7 @@ SehatSathi aims to bridge healthcare gaps in remote Indian communities. By lever
 
 ## Unique Selling Propositions (USPs) 🌟
 
-- **Underserved Community Focus**: SehatSathi is specifically designed to cater to the needs of India's underserved communities, ensuring equitable access to healthcare for all.
+- **Underserved Community Focus**: Arogya is specifically designed to cater to the needs of India's underserved communities, ensuring equitable access to healthcare for all.
 - **Doctor-to-Doctor Connect**: Facilitate communication and collaboration among healthcare professionals for better treatment opportunities, enabling a multidisciplinary approach to patient care.
 - **Root Level Consultation via Ayurvedic Medicine Curation**: Provide consultations rooted in traditional Ayurvedic medicine curated by experts, available in local languages, with a comprehensive database covering 150+ diseases.
 - **Built-in Chat Bot Support**: Access instant assistance and answers to common healthcare queries through our integrated chat bot feature.
@@ -48,9 +48,9 @@ SehatSathi aims to bridge healthcare gaps in remote Indian communities. By lever
 
 ## What we learned 📚
 
-The development of SehatSathi provided invaluable insights into the intersection of healthcare and technology. We deepened our understanding of the challenges and complexities involved in delivering telehealth services, including navigating regulatory requirements and ethical considerations.
+The development of Arogya provided invaluable insights into the intersection of healthcare and technology. We deepened our understanding of the challenges and complexities involved in delivering telehealth services, including navigating regulatory requirements and ethical considerations.
 
-## What's next for SehatSathi 🔮
+## What's next for Arogya 🔮
 
 Our roadmap includes:
 
@@ -59,4 +59,4 @@ Our roadmap includes:
 - Collaborations with healthcare professionals to gather insights for further improvements.
 - Exploration of emerging technologies to stay at the forefront of telemedicine advancements.
 
-SehatSathi remains dedicated to revolutionizing telehealth in India, striving to make quality healthcare accessible to individuals across the country.
+Arogya remains dedicated to revolutionizing telehealth in India, striving to make quality healthcare accessible to individuals across the country.
