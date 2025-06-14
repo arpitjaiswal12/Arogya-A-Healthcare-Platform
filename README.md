@@ -14,11 +14,17 @@
   </p>
 </div>
 
-
 ## About Project
 
 Arogya is a MERN stack-based platform addressing healthcare gaps in India's underserved communities. It integrates Ayurvedic and modern medicine, offering real-time video consultations via WebRTC, AI chatbots, doctor collaboration, and a multi-language interface. Designed for rural and marginalized groups, Arogya delivers holistic, accessible, and inclusive care.
 
+## Key Functionality 
+
+- Real-time video consultations with doctor's.
+- AI Chatbots integration
+- Appointment Booking with doctor
+- Browse ayurvedic and allopathic medicine based on disease
+- PhonePe payment integration
 
 ## Tech Stack
 
